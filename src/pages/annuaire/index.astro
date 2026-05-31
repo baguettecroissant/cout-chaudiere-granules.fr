@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteConfig } from '../../../site.config';
+import { getAllDepartments, getCitiesByDepartment } from '../../lib/cities';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const departments = getAllDepartments();
+---
+
+<BaseLayout
+  title={`Annuaire Chaudière Granulés par Ville — Tous les Départements | ${siteConfig.name}`}
+  description={`Trouvez un installateur de chaudière à granulés dans votre ville. Annuaire complet par département avec devis gratuits.`}
+  canonical="/annuaire"
+>
+  <section class="gradient-hero text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[
+        { label: "Annuaire", href: "/annuaire" },
+      ]} />
+      <h1 class="text-3xl md:text-4xl font-extrabold mb-4 font-heading mt-6">
+        📍 Annuaire Chaudière Granulés par Ville
+      </h1>
+      <p class="text-amber-200 text-lg">
+        Trouvez un installateur certifié RGE Qualibois dans votre département
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="space-y-10">
+      {departments.map((dept) => {
+        const deptCities = getCitiesByDepartment(dept.code);
+        return (
+          <div id={`dept-${dept.code}`} class="bg-white rounded-2xl border border-amber-200 p-6 shadow-sm">
+            <h2 class="text-xl font-bold text-brand-800 mb-1 flex items-center gap-2 font-heading">
+              <span class="bg-brand-50 text-brand-700 px-2 py-0.5 rounded text-sm font-data">{dept.code}</span>
+              <a href={`/annuaire/${dept.code.toLowerCase()}`} class="hover:text-accent-500 transition-colors">
+                {dept.name}
+              </a>
+              <span class="text-brand-600 text-sm font-normal">({dept.region})</span>
+            </h2>
+            <div class="flex flex-wrap gap-2 mt-4">
+              {deptCities.map((city) => (
+                <a
+                  href={`/prix-chaudiere-granules/${city.slug}`}
+                  class="bg-brand-50 hover:bg-brand-100 border border-amber-100 rounded-lg px-3 py-2 hover:border-accent-400 hover:shadow-sm transition-all text-xs font-semibold text-brand-700 hover:text-accent-500"
+                >
+                  {city.name} ({city.zip})
+                </a>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+</BaseLayout>

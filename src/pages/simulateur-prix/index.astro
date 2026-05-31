@@ -1,0 +1,397 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteConfig } from '../../../site.config';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": `Simulateur Prix & Aides Chaudière Granulés 2026`,
+    "description": `Estimez gratuitement le prix, la puissance nécessaire et le montant des aides pour l'installation d'une chaudière à granulés de bois.`,
+    "url": `https://${siteConfig.domain}/simulateur-prix`,
+  }
+];
+---
+
+<BaseLayout
+  title={`Simulateur Prix & Aides Chaudière Granulés 2026 | ${siteConfig.name}`}
+  description={`Calculez en 2 minutes la puissance requise, le coût de l'installation, le montant de vos aides (MaPrimeRénov', CEE) et votre reste à charge réel.`}
+  canonical="/simulateur-prix"
+  jsonLd={jsonLd}
+>
+  <section class="gradient-hero text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[
+        { label: "Simulateur", href: "/simulateur-prix" },
+      ]} />
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-4 font-heading mt-6">
+        🔥 Simulateur Prix, Aides & Reste à Charge
+      </h1>
+      <p class="text-amber-200 text-lg max-w-2xl">
+        Estimez la puissance requise pour votre maison, le budget de l'installation et le montant cumulé de vos aides financières en 2026.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid lg:grid-cols-12 gap-8 items-start">
+      <!-- Form Card -->
+      <div class="lg:col-span-7 bg-white rounded-2xl border border-amber-200 shadow-sm p-6 md:p-8 space-y-6">
+        <h2 class="text-xl font-bold text-brand-800 border-b border-amber-100 pb-3 font-heading flex items-center gap-2">
+          <span>📋</span> Vos caractéristiques de logement
+        </h2>
+
+        <div class="space-y-4">
+          <!-- Surface -->
+          <div>
+            <label class="block text-sm font-semibold text-brand-800 mb-2">
+              Surface habitable de votre maison : <span id="surface-val" class="font-data text-accent-500 font-bold">120</span> m²
+            </label>
+            <input
+              type="range"
+              id="surface"
+              min="50"
+              max="300"
+              value="120"
+              step="5"
+              class="w-full h-2 bg-amber-100 rounded-lg appearance-none cursor-pointer accent-accent-500"
+            />
+            <div class="flex justify-between text-xs text-brand-600 px-1 mt-1">
+              <span>50 m²</span>
+              <span>120 m²</span>
+              <span>200 m²</span>
+              <span>300 m²</span>
+            </div>
+          </div>
+
+          <!-- Isolation -->
+          <div>
+            <label class="block text-sm font-semibold text-brand-800 mb-2">Qualité de l'isolation :</label>
+            <div class="grid grid-cols-3 gap-2">
+              <label class="border-2 border-amber-200 hover:border-accent-400 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-white" id="ins-good-lbl">
+                <input type="radio" name="isolation" value="good" class="hidden" />
+                <span class="text-lg">🟢</span>
+                <span class="text-xs font-bold text-brand-800 mt-1">Excellente</span>
+                <span class="text-[10px] text-brand-600">RT2012 / RT2020</span>
+              </label>
+              <label class="border-2 border-accent-500 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-brand-50" id="ins-medium-lbl">
+                <input type="radio" name="isolation" value="medium" checked class="hidden" />
+                <span class="text-lg">🟡</span>
+                <span class="text-xs font-bold text-brand-800 mt-1">Moyenne</span>
+                <span class="text-[10px] text-brand-600">Isolée > 10 ans</span>
+              </label>
+              <label class="border-2 border-amber-200 hover:border-accent-400 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-white" id="ins-poor-lbl">
+                <input type="radio" name="isolation" value="poor" class="hidden" />
+                <span class="text-lg">🔴</span>
+                <span class="text-xs font-bold text-brand-800 mt-1">Faible</span>
+                <span class="text-[10px] text-brand-600">Non isolée / Ancienne</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Climat -->
+          <div>
+            <label class="block text-sm font-semibold text-brand-800 mb-2">Zone climatique de votre région :</label>
+            <div class="grid grid-cols-3 gap-2">
+              <label class="border-2 border-accent-500 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-brand-50" id="zone-h1-lbl">
+                <input type="radio" name="climate" value="H1" checked class="hidden" />
+                <span class="text-lg">❄️ H1</span>
+                <span class="text-xs font-bold text-brand-800 mt-1">Froide</span>
+                <span class="text-[10px] text-brand-600">Nord, Est, Centre</span>
+              </label>
+              <label class="border-2 border-amber-200 hover:border-accent-400 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-white" id="zone-h2-lbl">
+                <input type="radio" name="climate" value="H2" class="hidden" />
+                <span class="text-lg">☁️ H2</span>
+                <span class="text-xs font-bold text-brand-800 mt-1">Tempérée</span>
+                <span class="text-[10px] text-brand-600">Ouest, Sud-Ouest</span>
+              </label>
+              <label class="border-2 border-amber-200 hover:border-accent-400 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-white" id="zone-h3-lbl">
+                <input type="radio" name="climate" value="H3" class="hidden" />
+                <span class="text-lg">☀️ H3</span>
+                <span class="text-xs font-bold text-brand-800 mt-1">Douce</span>
+                <span class="text-[10px] text-brand-600">Méditerranée</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Chauffage Actuel -->
+          <div>
+            <label class="block text-sm font-semibold text-brand-800 mb-2">Chauffage à remplacer :</label>
+            <div class="grid grid-cols-4 gap-2">
+              <label class="border-2 border-accent-500 rounded-xl p-2.5 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-brand-50" id="heat-fioul-lbl">
+                <input type="radio" name="heating" value="fioul" checked class="hidden" />
+                <span class="text-lg">🛢️</span>
+                <span class="text-xs font-bold text-brand-800 mt-1">Fioul</span>
+              </label>
+              <label class="border-2 border-amber-200 hover:border-accent-400 rounded-xl p-2.5 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-white" id="heat-gas-lbl">
+                <input type="radio" name="heating" value="gas" class="hidden" />
+                <span class="text-lg">🔥</span>
+                <span class="text-xs font-bold text-brand-800 mt-1">Gaz</span>
+              </label>
+              <label class="border-2 border-amber-200 hover:border-accent-400 rounded-xl p-2.5 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-white" id="heat-elec-lbl">
+                <input type="radio" name="heating" value="elec" class="hidden" />
+                <span class="text-lg">⚡</span>
+                <span class="text-xs font-bold text-brand-800 mt-1">Élec</span>
+              </label>
+              <label class="border-2 border-amber-200 hover:border-accent-400 rounded-xl p-2.5 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-white" id="heat-wood-lbl">
+                <input type="radio" name="heating" value="wood" class="hidden" />
+                <span class="text-lg">🪵</span>
+                <span class="text-xs font-bold text-brand-800 mt-1">Autre</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Profil de revenus -->
+          <div>
+            <label class="block text-sm font-semibold text-brand-800 mb-2">Revenus annuels de votre foyer :</label>
+            <div class="grid grid-cols-2 gap-2">
+              <label class="border-2 border-accent-500 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-brand-50" id="inc-very-modest-lbl">
+                <input type="radio" name="income" value="very-modest" checked class="hidden" />
+                <span class="text-xs font-bold text-brand-800">🔵 Très Modestes</span>
+                <span class="text-[10px] text-brand-600">Aides maximales</span>
+              </label>
+              <label class="border-2 border-amber-200 hover:border-accent-400 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-white" id="inc-modest-lbl">
+                <input type="radio" name="income" value="modest" class="hidden" />
+                <span class="text-xs font-bold text-brand-800">🟡 Modestes</span>
+                <span class="text-[10px] text-brand-600">Aides très élevées</span>
+              </label>
+              <label class="border-2 border-amber-200 hover:border-accent-400 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-white" id="inc-inter-lbl">
+                <input type="radio" name="income" value="intermediate" class="hidden" />
+                <span class="text-xs font-bold text-brand-800">🟣 Intermédiaires</span>
+                <span class="text-[10px] text-brand-600">Aides moyennes</span>
+              </label>
+              <label class="border-2 border-amber-200 hover:border-accent-400 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-white" id="inc-high-lbl">
+                <input type="radio" name="income" value="high" class="hidden" />
+                <span class="text-xs font-bold text-brand-800">🔴 Revenus Aisés</span>
+                <span class="text-[10px] text-brand-600">CEE + éco-PTZ</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Card -->
+      <div class="lg:col-span-5 bg-brand-700 text-white rounded-2xl border border-brand-800 shadow-lg p-6 md:p-8 space-y-6">
+        <h2 class="text-xl font-bold text-amber-300 border-b border-brand-600 pb-3 font-heading flex items-center gap-2">
+          <span>✨</span> Résultats de la simulation
+        </h2>
+
+        <!-- Dimensioning -->
+        <div class="flex justify-between items-center py-2 border-b border-brand-600/50">
+          <span class="text-sm text-amber-100/70">Puissance recommandée :</span>
+          <span class="font-data font-bold text-lg text-amber-300" id="result-power">15-20 kW</span>
+        </div>
+
+        <!-- Installation Type -->
+        <div class="flex justify-between items-center py-2 border-b border-brand-600/50">
+          <span class="text-sm text-amber-100/70">Type de chaudière conseillé :</span>
+          <span class="font-bold text-sm text-amber-100" id="result-type">Standard Automatique</span>
+        </div>
+
+        <!-- Est. Price -->
+        <div class="flex justify-between items-center py-2 border-b border-brand-600/50">
+          <span class="text-sm text-amber-100/70">Prix pose comprise (est.) :</span>
+          <span class="font-data font-bold text-lg text-amber-300" id="result-cost">12 000 €</span>
+        </div>
+
+        <!-- Aides block -->
+        <div class="space-y-2">
+          <span class="text-xs text-amber-100/60 block uppercase font-semibold">Détail des aides financières :</span>
+          <div class="bg-brand-800/60 rounded-xl p-4 space-y-2">
+            <div class="flex justify-between text-sm">
+              <span class="text-amber-100/80">MaPrimeRénov' :</span>
+              <span class="font-data font-bold text-accent-400" id="result-mpr">+ 10 000 €</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-amber-100/80">Prime CEE (Énergie) :</span>
+              <span class="font-data font-bold text-accent-400" id="result-cee">+ 3 500 €</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-amber-100/80">Bonus sortie fioul :</span>
+              <span class="font-data font-bold text-accent-400" id="result-bonus">+ 1 000 €</span>
+            </div>
+            <div class="flex justify-between text-base border-t border-brand-600/50 pt-2 mt-2">
+              <span class="font-semibold text-white">Total des aides :</span>
+              <span class="font-data font-bold text-accent-400" id="result-total-aids">14 500 €</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Net Price / Reste à charge -->
+        <div class="bg-accent-600 rounded-xl p-5 text-center shadow-inner">
+          <span class="text-xs text-green-100 block uppercase font-bold tracking-wider">Votre Reste à Charge Réel</span>
+          <span class="font-data font-extrabold text-3xl text-white block mt-1" id="result-net">0 €</span>
+          <span class="text-[10px] text-green-100 block mt-1">Soit <span id="result-pct">100%</span> d'aide sur votre équipement !</span>
+        </div>
+
+        <!-- Savings vs old system -->
+        <div class="bg-brand-800/40 border border-brand-600/30 rounded-xl p-4 text-center">
+          <span class="text-xs text-amber-100/70">Économies de chauffage estimées :</span>
+          <span class="block font-data font-bold text-xl text-amber-300 mt-1" id="result-savings">1 200 € / an</span>
+          <span class="text-[10px] text-amber-100/60 mt-1 block">Vous divisez votre budget annuel par 2 par rapport au fioul !</span>
+        </div>
+
+        <a href="/devis" class="block w-full text-center cta-gradient text-white font-bold py-4 rounded-xl transition-all shadow-lg text-base">
+          🔥 Recevoir mes 3 Devis RGE Gratuits →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive script to power calculations -->
+  <script is:inline>
+    (function() {
+      const surfaceInput = document.getElementById('surface');
+      const surfaceVal = document.getElementById('surface-val');
+
+      const isolations = document.getElementsByName('isolation');
+      const climates = document.getElementsByName('climate');
+      const heatings = document.getElementsByName('heating');
+      const incomes = document.getElementsByName('income');
+
+      function updateRadioLabels(name, activeId) {
+        const els = document.getElementsByName(name);
+        els.forEach(el => {
+          const parent = el.closest('label');
+          if (parent) {
+            if (parent.id === activeId) {
+              parent.classList.remove('border-amber-200', 'hover:border-accent-400', 'bg-white');
+              parent.classList.add('border-accent-500', 'bg-brand-50');
+            } else {
+              parent.classList.remove('border-accent-500', 'bg-brand-50');
+              parent.classList.add('border-amber-200', 'hover:border-accent-400', 'bg-white');
+            }
+          }
+        });
+      }
+
+      function calculate() {
+        const surface = parseInt(surfaceInput.value);
+        surfaceVal.textContent = surface;
+
+        let isolation = 'medium';
+        isolations.forEach(el => { if (el.checked) isolation = el.value; });
+
+        let climate = 'H1';
+        climates.forEach(el => { if (el.checked) climate = el.value; });
+
+        let heating = 'fioul';
+        heatings.forEach(el => { if (el.checked) heating = el.value; });
+
+        let income = 'very-modest';
+        incomes.forEach(el => { if (el.checked) income = el.value; });
+
+        let isoFactor = 0.06;
+        if (isolation === 'good') isoFactor = 0.04;
+        if (isolation === 'poor') isoFactor = 0.085;
+
+        let climateMult = 1.0;
+        if (climate === 'H1') climateMult = 1.2;
+        if (climate === 'H3') climateMult = 0.8;
+
+        const basePower = surface * 3 * isoFactor * climateMult * 0.08;
+        let recommendedPower = '15-20 kW';
+        if (basePower <= 12) recommendedPower = '10-15 kW';
+        else if (basePower > 12 && basePower <= 18) recommendedPower = '15-20 kW';
+        else if (basePower > 18 && basePower <= 25) recommendedPower = '20-25 kW';
+        else recommendedPower = '25-35 kW';
+
+        document.getElementById('result-power').textContent = recommendedPower;
+
+        let type = 'Standard Automatique';
+        let cost = 12000;
+        if (surface > 150) {
+          type = 'À Condensation (Haut Rendement)';
+          cost = 16000;
+        } else if (isolation === 'poor' && climate === 'H1') {
+          type = 'Automatique Aspiration';
+          cost = 18000;
+        } else if (surface < 90) {
+          type = 'Standard Compact';
+          cost = 9500;
+        }
+
+        let mpr = 0;
+        let cee = 0;
+        let bonus = 0;
+
+        if (income === 'very-modest') {
+          mpr = 10000;
+          cee = climate === 'H1' ? 3500 : climate === 'H3' ? 2500 : 3000;
+          if (heating === 'fioul') bonus = 1000;
+        } else if (income === 'modest') {
+          mpr = 8000;
+          cee = climate === 'H1' ? 3000 : climate === 'H3' ? 2000 : 2500;
+          if (heating === 'fioul') bonus = 1000;
+        } else if (income === 'intermediate') {
+          mpr = 4000;
+          cee = climate === 'H1' ? 2000 : climate === 'H3' ? 1200 : 1600;
+          if (heating === 'fioul') bonus = 1000;
+        } else {
+          mpr = 0;
+          cee = climate === 'H1' ? 1200 : climate === 'H3' ? 800 : 1000;
+          bonus = 0;
+        }
+
+        const totalAids = mpr + cee + bonus;
+        let net = cost - totalAids;
+        if (net < 1000) net = 1000;
+
+        const percentage = Math.round((totalAids / cost) * 100);
+
+        let currentCost = 2200;
+        if (heating === 'fioul') currentCost = (surface / 120) * 2600;
+        else if (heating === 'gas') currentCost = (surface / 120) * 1800;
+        else if (heating === 'elec') currentCost = (surface / 120) * 3400;
+        else currentCost = (surface / 120) * 1600;
+
+        const pelletCost = (surface / 120) * (climate === 'H1' ? 1600 : climate === 'H3' ? 1100 : 1350);
+        let annualSavings = Math.round(currentCost - pelletCost);
+        if (annualSavings < 200) annualSavings = 250;
+
+        document.getElementById('result-type').textContent = type;
+        document.getElementById('result-cost').textContent = cost.toLocaleString('fr-FR') + ' €';
+        document.getElementById('result-mpr').textContent = mpr > 0 ? '+ ' + mpr.toLocaleString('fr-FR') + ' €' : 'Non éligible';
+        document.getElementById('result-cee').textContent = '+ ' + cee.toLocaleString('fr-FR') + ' €';
+        document.getElementById('result-bonus').textContent = bonus > 0 ? '+ ' + bonus.toLocaleString('fr-FR') + ' €' : 'Non éligible';
+        document.getElementById('result-total-aids').textContent = totalAids.toLocaleString('fr-FR') + ' €';
+        document.getElementById('result-net').textContent = net.toLocaleString('fr-FR') + ' €';
+        document.getElementById('result-pct').textContent = (percentage > 100 ? 100 : percentage) + '%';
+        document.getElementById('result-savings').textContent = annualSavings.toLocaleString('fr-FR') + ' € / an';
+      }
+
+      surfaceInput.addEventListener('input', calculate);
+
+      isolations.forEach(el => {
+        el.addEventListener('change', (e) => {
+          updateRadioLabels('isolation', e.target.closest('label').id);
+          calculate();
+        });
+      });
+
+      climates.forEach(el => {
+        el.addEventListener('change', (e) => {
+          updateRadioLabels('climate', e.target.closest('label').id);
+          calculate();
+        });
+      });
+
+      heatings.forEach(el => {
+        el.addEventListener('change', (e) => {
+          updateRadioLabels('heating', e.target.closest('label').id);
+          calculate();
+        });
+      });
+
+      incomes.forEach(el => {
+        el.addEventListener('change', (e) => {
+          updateRadioLabels('income', e.target.closest('label').id);
+          calculate();
+        });
+      });
+
+      calculate();
+    })();
+  </script>
+</BaseLayout>

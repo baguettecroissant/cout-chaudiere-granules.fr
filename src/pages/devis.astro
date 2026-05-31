@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import QuoteWidget from '../components/QuoteWidget.astro';
+import { siteConfig } from '../../site.config';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Demande de Devis Chaudière à Granulés de Bois",
+    "description": "Demandez 3 devis gratuits d'installateurs certifiés RGE Qualibois pour votre chaudière à granulés.",
+    "url": "https://" + siteConfig.domain + "/devis",
+  }
+];
+---
+
+<BaseLayout
+  title={`Demande de Devis Chaudière Granulés Gratuit | ${siteConfig.name}`}
+  description={`Remplissez le formulaire en 2 minutes et recevez jusqu'à 3 devis comparatifs gratuits d'installateurs certifiés RGE de votre département.`}
+  canonical="/devis"
+  jsonLd={jsonLd}
+>
+  <section class="gradient-hero text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[
+        { label: "Accueil", href: "/" },
+        { label: "Demande de devis", href: "/devis" },
+      ]} />
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-4 font-heading mt-6">
+        🔥 Demande de Devis Chaudière Granulés
+      </h1>
+      <p class="text-amber-200 text-lg max-w-xl">
+        Comparez gratuitement les prix de 3 installateurs qualifiés RGE de votre région. Service 100% gratuit et sans engagement.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-2xl shadow-sm border border-amber-200 p-2">
+      <QuoteWidget keyword="devis chaudiere granules" />
+    </div>
+
+    <!-- Info points -->
+    <div class="mt-8 grid gap-4">
+      <div class="flex gap-3 bg-brand-50 p-4 rounded-xl border border-amber-100">
+        <span class="text-xl">✅</span>
+        <div>
+          <h4 class="font-bold text-brand-800 text-sm">Artisans certifiés RGE Qualibois</h4>
+          <p class="text-xs text-brand-600 mt-0.5">La certification RGE de nos artisans partenaires est obligatoire pour vous rendre éligible aux aides nationales (MaPrimeRénov', CEE, etc.).</p>
+        </div>
+      </div>
+      <div class="flex gap-3 bg-brand-50 p-4 rounded-xl border border-amber-100">
+        <span class="text-xl">⏱️</span>
+        <div>
+          <h4 class="font-bold text-brand-800 text-sm">Réponse rapide sous 48h</h4>
+          <p class="text-xs text-brand-600 mt-0.5">Dès la validation de votre formulaire, jusqu'à 3 professionnels locaux analysent votre projet et vous recontactent sous 24 à 48 heures maximum.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

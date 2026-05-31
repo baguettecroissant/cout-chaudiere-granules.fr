@@ -1,0 +1,228 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import QuoteWidget from '../components/QuoteWidget.astro';
+import PriceTable from '../components/PriceTable.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import FAQ from '../components/FAQ.astro';
+import { siteConfig } from '../../site.config';
+import { getAllCities, getAllDepartments } from '../lib/cities';
+
+const topCities = getAllCities().slice(0, 20);
+const departments = getAllDepartments();
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": siteConfig.name,
+    "url": "https://" + siteConfig.domain,
+    "description": siteConfig.description,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": siteConfig.faq.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a }
+    }))
+  }
+];
+---
+
+<BaseLayout
+  title={siteConfig.niche.heroTitle + " | " + siteConfig.name}
+  description={siteConfig.description}
+  canonical="/"
+  jsonLd={jsonLd}
+>
+  <!-- Hero Section with Background Image -->
+  <section class="gradient-hero-image text-white py-16 md:py-24 relative overflow-hidden" style="--hero-bg: url('/images/hero.png');">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <!-- Animated badge -->
+          <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm mb-6 flame-pulse">
+            <span>🔥</span>
+            <span>Jusqu'à 10 000€ d'aides en 2026</span>
+          </div>
+
+          <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6 font-heading">
+            Chaudière à Granulés<br/>
+            <span class="text-amber-300">Prix, Aides & Devis 2026</span>
+          </h1>
+          <p class="text-lg text-amber-100/80 leading-relaxed mb-8 max-w-lg">
+            {siteConfig.niche.heroSubtitle}
+          </p>
+
+          <!-- Counter -->
+          <div class="bg-white/10 backdrop-blur-sm rounded-xl px-5 py-3 inline-block mb-6 count-up">
+            <span class="font-data text-2xl font-bold text-amber-300">3 847</span>
+            <span class="text-amber-100/70 text-sm ml-2">devis demandés ce mois</span>
+          </div>
+
+          <div class="flex flex-wrap gap-3">
+            {siteConfig.trustBadges.map((badge) => (
+              <span class="bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1.5 rounded-full text-sm font-medium">
+                ✓ {badge}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div class="lg:block">
+          <QuoteWidget keyword={siteConfig.niche.name} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro Text -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-brand-800 mb-6 font-heading">
+        Pourquoi choisir une chaudière à granulés ?
+      </h2>
+      <div class="text-brand-700 leading-relaxed space-y-4">
+        {siteConfig.introText.split('\n\n').map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+    <div class="bg-brand-50 rounded-2xl p-6 md:p-8 border border-amber-200">
+      <h3 class="text-xl font-bold text-brand-800 mb-4 font-heading">✅ Pourquoi utiliser notre comparateur ?</h3>
+      <div class="grid sm:grid-cols-2 gap-3">
+        {siteConfig.whyChooseUs.map((item) => (
+          <div class="flex items-start gap-3">
+            <span class="text-accent-500 mt-0.5 font-bold">→</span>
+            <span class="text-sm text-brand-700">{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <ProcessSteps />
+  </section>
+
+  <!-- Price Table -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <PriceTable />
+  </section>
+
+  <!-- Energy comparison -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="saviez-vous rounded-xl p-6">
+      <h3 class="text-lg font-bold text-brand-800 mb-3 font-heading">💡 Saviez-vous ? Comparatif coût annuel de chauffage</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm price-table border-collapse rounded-xl overflow-hidden">
+          <thead>
+            <tr>
+              <th class="px-4 py-3 text-left">Énergie</th>
+              <th class="px-4 py-3 text-left">Conso 120 m²</th>
+              <th class="px-4 py-3 text-left">Coût annuel</th>
+              <th class="px-4 py-3 text-left">CO₂</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="font-bold" style="background-color: #f0fdf4;">
+              <td class="px-4 py-2.5 text-accent-600">✅ Granulés de bois</td>
+              <td class="px-4 py-2.5">4-5 tonnes</td>
+              <td class="px-4 py-2.5 price font-data text-accent-500">1 200 – 1 800€</td>
+              <td class="px-4 py-2.5 text-accent-600">~0 kg</td>
+            </tr>
+            <tr class="border-b border-amber-100">
+              <td class="px-4 py-2.5 text-brand-800">Gaz naturel</td>
+              <td class="px-4 py-2.5">15 000 kWh</td>
+              <td class="px-4 py-2.5 font-data">1 500 – 1 900€</td>
+              <td class="px-4 py-2.5">3 060 kg</td>
+            </tr>
+            <tr class="border-b border-amber-100">
+              <td class="px-4 py-2.5 text-brand-800">Fioul</td>
+              <td class="px-4 py-2.5">2 000 L</td>
+              <td class="px-4 py-2.5 font-data">2 200 – 2 800€</td>
+              <td class="px-4 py-2.5">5 280 kg</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2.5 text-brand-800">Électrique</td>
+              <td class="px-4 py-2.5">15 000 kWh</td>
+              <td class="px-4 py-2.5 font-data">3 000 – 3 800€</td>
+              <td class="px-4 py-2.5">Variable</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aids Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h2 class="text-2xl font-bold text-brand-800 mb-2 font-heading">
+      🏛️ Aides Financières 2026
+    </h2>
+    <p class="text-brand-600 text-sm mb-6">Jusqu'à 15 000€ d'aides cumulées pour votre chaudière à granulés</p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {siteConfig.aids.map((aid) => (
+        <div class="bg-white rounded-xl p-5 border border-amber-200 card-hover">
+          <h3 class="font-bold text-brand-800 text-sm mb-1">{aid.name}</h3>
+          <p class="font-data text-lg font-bold text-accent-500 mb-2">{aid.amount}</p>
+          <p class="text-xs text-brand-600">{aid.condition}</p>
+        </div>
+      ))}
+    </div>
+    <div class="text-center mt-4">
+      <a href="/guides/aides-chaudiere-granules-2026" class="text-accent-500 hover:text-accent-600 font-semibold text-sm transition-colors">
+        Guide complet des aides 2026 →
+      </a>
+    </div>
+  </section>
+
+  <!-- City Grid -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h2 class="text-2xl font-bold text-brand-800 mb-2 font-heading">
+      📍 Chaudière Granulés par ville
+    </h2>
+    <p class="text-brand-600 mb-6">Trouvez un installateur certifié RGE Qualibois près de chez vous</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+      {topCities.map((city) => (
+        <a
+          href={"/prix-chaudiere-granules/" + city.slug}
+          class="bg-white border border-amber-200 rounded-xl px-4 py-3 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"
+        >
+          <span class="font-semibold text-brand-800 group-hover:text-accent-500 text-sm">{city.name}</span>
+          <span class="block text-xs text-brand-600 mt-0.5">{city.zip}</span>
+        </a>
+      ))}
+    </div>
+    <div class="text-center mt-6">
+      <a href="/annuaire" class="text-accent-500 hover:text-accent-600 font-semibold text-sm transition-colors">
+        Voir toutes les villes →
+      </a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <FAQ items={siteConfig.faq} />
+  </section>
+
+  <!-- Final CTA -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="cta-gradient rounded-2xl p-8 md:p-12 text-center text-white">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4 font-heading">
+        Prêt à passer aux granulés ?
+      </h2>
+      <p class="text-green-100 mb-6 max-w-lg mx-auto">
+        Comparez les devis de 3 installateurs certifiés RGE Qualibois. C'est gratuit, rapide et sans engagement.
+      </p>
+      <a href="/devis" class="inline-block bg-white text-accent-600 font-bold px-8 py-4 rounded-xl hover:bg-green-50 transition-colors shadow-lg text-lg">
+        🔥 Demander mes 3 devis gratuits
+      </a>
+    </div>
+  </section>
+</BaseLayout>

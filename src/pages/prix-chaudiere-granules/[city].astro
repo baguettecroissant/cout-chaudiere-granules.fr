@@ -1,0 +1,245 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import QuoteWidget from '../../components/QuoteWidget.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FAQ from '../../components/FAQ.astro';
+import { siteConfig } from '../../../site.config';
+import { getAllCities, getNearbyCities, type City } from '../../lib/cities';
+
+export function getStaticPaths() {
+  const cities = getAllCities();
+  return cities.map(city => ({
+    params: { city: city.slug },
+    props: { city },
+  }));
+}
+
+const { city } = Astro.props as { city: City };
+const nearbyCities = getNearbyCities(city.slug, 8);
+
+// Zone climatique
+const h1Depts = ['59','62','02','60','80','08','51','10','55','54','57','67','68','88','70','25','39','21','71','89','58','18','36','23','87','19','03','63','43','15','48','42'];
+const h3Depts = ['06','83','13','84','2A','2B','34','30','66','11'];
+const zone = h1Depts.includes(city.deptCode) ? 'H1' : h3Depts.includes(city.deptCode) ? 'H3' : 'H2';
+
+// Seed-based local content variation
+const seed = city.slug.split('').reduce((acc: number, c: string) => acc + c.charCodeAt(0), 0);
+const variation = seed % 5;
+const fuelSavings = 900 + (seed % 400);
+const annualCost = 1200 + (seed % 600);
+const ceeRange = zone === 'H1' ? '3 000-4 000 EUR' : zone === 'H3' ? '2 000-3 000 EUR' : '2 500-3 500 EUR';
+const powerRange = zone === 'H1' ? '20-25 kW' : zone === 'H3' ? '14-18 kW' : '16-22 kW';
+const roiYears = 6 + (seed % 4);
+const devisLow = 8000 + (seed % 4000);
+const devisHigh = 14000 + (seed % 6000);
+const fournisseurs = 2 + (seed % 3);
+const prixTonne = 310 + (seed % 80);
+const prixLow = 8000 + (seed % 3000);
+const prixHigh = 16000 + (seed % 5000);
+const resteACharge = 3500 + (seed % 3000);
+const nbInstallateurs = 8 + (seed % 15);
+const coutMensuel = Math.round(annualCost / 12);
+const economieMensuelle = Math.round(fuelSavings / 12);
+
+const localTips = [
+  "A " + city.name + ", le remplacement d une chaudiere fioul est particulierement rentable. Les installateurs RGE Qualibois du " + city.deptCode + " constatent un retour sur investissement moyen de " + roiYears + " ans, soit " + fuelSavings + " EUR d economies annuelles.",
+  "Le departement " + city.deptCode + " (" + city.region + ") est classe en zone climatique " + zone + ". A " + city.name + ", une puissance de " + powerRange + " est recommandee pour une maison de 120 m\u00B2.",
+  "Les artisans certifies RGE Qualibois autour de " + city.name + " proposent en moyenne des devis entre " + devisLow + " EUR et " + devisHigh + " EUR TTC pose comprise pour une chaudiere standard automatique.",
+  "Les habitants de " + city.name + " beneficient des memes aides nationales (MaPrimeRenov, CEE) que partout en France, mais la prime CEE est plus avantageuse en zone " + zone + " : " + ceeRange + " pour les menages modestes.",
+  "A " + city.name + " et dans le " + city.deptCode + ", la livraison de granules en vrac est bien desservie avec " + fournisseurs + " fournisseurs locaux. Le prix moyen constate est de " + prixTonne + " EUR/tonne en vrac.",
+];
+
+const localFaq = [
+  { q: "Quel prix pour une chaudiere a granules a " + city.name + " ?", a: "A " + city.name + " (" + city.zip + "), le prix varie entre " + prixLow + " EUR et " + prixHigh + " EUR TTC pose comprise. Apres aides, le reste a charge moyen est de " + resteACharge + " EUR." },
+  { q: "Combien d installateurs RGE a " + city.name + " (" + city.deptCode + ") ?", a: "Le departement " + city.deptCode + " compte " + nbInstallateurs + " installateurs certifies RGE Qualibois. Demandez vos devis pour recevoir 3 propositions." },
+  { q: "Quel est le cout annuel de chauffage aux granules a " + city.name + " ?", a: "Pour une maison de 120 m\u00B2 a " + city.name + " (zone " + zone + "), comptez " + annualCost + " EUR par an, soit environ " + coutMensuel + " EUR/mois. C est " + economieMensuelle + " EUR de moins par mois qu avec le fioul." },
+  { q: "Quelles aides pour une chaudiere granules a " + city.name + " en 2026 ?", a: "MaPrimeRenov (4 000-10 000 EUR), CEE (" + ceeRange + "), bonus sortie fioul (+1 000 EUR), TVA 5,5% et Eco-PTZ (30 000 EUR a taux 0%)." },
+];
+
+const title = siteConfig.niche.seoTitleTemplate.replace('{city}', city.name).replace('{zip}', city.zip);
+const description = siteConfig.niche.metaDescTemplate.replace('{city}', city.name).replace('{zip}', city.zip);
+
+const priceStd = zone === 'H1' ? '10 000\u20AC' : zone === 'H3' ? '8 500\u20AC' : '9 000\u20AC';
+const priceRec = zone === 'H1' ? '14 000\u20AC' : zone === 'H3' ? '11 000\u20AC' : '12 500\u20AC';
+const priceAuto = zone === 'H1' ? '18 000\u20AC' : zone === 'H3' ? '15 000\u20AC' : '16 500\u20AC';
+const priceMix = zone === 'H1' ? '15 000\u20AC' : zone === 'H3' ? '12 000\u20AC' : '13 500\u20AC';
+const resteCharge = zone === 'H1' ? '2 500 \u2013 6 000\u20AC' : zone === 'H3' ? '1 500 \u2013 4 500\u20AC' : '2 000 \u2013 5 500\u20AC';
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Installation Chaudiere Granules " + city.name,
+    "description": description,
+    "areaServed": { "@type": "City", "name": city.name, "postalCode": city.zip },
+    "provider": { "@type": "Organization", "name": siteConfig.name },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": localFaq.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a }
+    }))
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://" + siteConfig.domain },
+      { "@type": "ListItem", "position": 2, "name": "Annuaire", "item": "https://" + siteConfig.domain + "/annuaire" },
+      { "@type": "ListItem", "position": 3, "name": city.name },
+    ]
+  }
+];
+---
+
+<BaseLayout title={title} description={description} canonical={"/prix-chaudiere-granules/" + city.slug} jsonLd={jsonLd}>
+  <section class="gradient-hero text-white py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[
+        { label: "Annuaire", href: "/annuaire" },
+        { label: city.deptCode, href: "/annuaire/" + city.deptCode.toLowerCase() },
+        { label: city.name, href: "/prix-chaudiere-granules/" + city.slug },
+      ]} />
+
+      <div class="grid lg:grid-cols-5 gap-10 items-start mt-6">
+        <div class="lg:col-span-3">
+          <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm mb-4 flame-pulse">
+            <span>🔥</span>
+            <span>Jusqu'à 10 000€ d'aides en 2026</span>
+          </div>
+
+          <h1 class="text-2xl md:text-4xl font-extrabold leading-tight mb-4 font-heading">
+            Chaudière à Granulés à {city.name} ({city.zip})
+          </h1>
+          <p class="text-amber-200/80 leading-relaxed mb-6 max-w-xl">
+            Prix, installateurs RGE et aides pour votre chaudière à granulés à {city.name}. Comparez 3 devis gratuits.
+          </p>
+
+          <div class="flex flex-wrap gap-3 mb-6">
+            <span class="bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1.5 rounded-full text-sm">📍 {city.name} ({city.zip})</span>
+            <span class="bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1.5 rounded-full text-sm">🌡️ Zone {zone}</span>
+            <span class="bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1.5 rounded-full text-sm">✓ RGE Qualibois</span>
+          </div>
+
+          <a href="#devis-form" class="inline-block cta-gradient text-white font-bold px-6 py-3.5 rounded-xl transition-all shadow-lg text-base">
+            🔥 Devis Gratuit à {city.name} →
+          </a>
+        </div>
+
+        <div class="lg:col-span-2">
+          <QuoteWidget keyword={"Chaudiere granules " + city.name} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+    <!-- Block 1: Local Intro -->
+    <section class="bg-white rounded-2xl shadow-sm border border-amber-200 p-6 md:p-8">
+      <h2 class="text-2xl font-bold text-brand-800 mb-4 font-heading">🏠 Installer une chaudière granulés à {city.name}</h2>
+      <div class="text-brand-700 space-y-4 leading-relaxed">
+        <p>{localTips[variation]}</p>
+        <p>{localTips[(variation + 1) % 5]}</p>
+      </div>
+    </section>
+
+    <!-- Block 2: Price Range -->
+    <section class="bg-gradient-to-r from-brand-50 to-amber-50 rounded-2xl border border-amber-200 p-6 md:p-8">
+      <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading">💰 Prix moyen à {city.name} ({city.deptCode})</h2>
+      <div class="grid sm:grid-cols-4 gap-4 mb-4">
+        <div class="bg-white rounded-xl p-4 text-center border border-amber-100">
+          <span class="block text-sm text-brand-600 mb-1">Standard</span>
+          <span class="block text-lg font-bold text-brand-800 font-data">{priceStd}</span>
+          <span class="block text-xs text-brand-600">15-20 kW posé</span>
+        </div>
+        <div class="bg-white rounded-xl p-4 text-center border border-accent-200 ring-2 ring-accent-100">
+          <span class="block text-sm text-accent-500 font-medium mb-1">Recommandé</span>
+          <span class="block text-lg font-bold text-brand-800 font-data">{priceRec}</span>
+          <span class="block text-xs text-brand-600">20 kW condensation</span>
+        </div>
+        <div class="bg-white rounded-xl p-4 text-center border border-amber-100">
+          <span class="block text-sm text-brand-600 mb-1">Automatique</span>
+          <span class="block text-lg font-bold text-brand-800 font-data">{priceAuto}</span>
+          <span class="block text-xs text-brand-600">25 kW aspiration</span>
+        </div>
+        <div class="bg-white rounded-xl p-4 text-center border border-amber-100">
+          <span class="block text-sm text-brand-600 mb-1">Mixte bois</span>
+          <span class="block text-lg font-bold text-brand-800 font-data">{priceMix}</span>
+          <span class="block text-xs text-brand-600">20-30 kW posé</span>
+        </div>
+      </div>
+      <p class="text-sm text-brand-600">
+        Prix TTC pose comprise à {city.name}. Après aides, reste à charge : <strong class="font-data text-accent-500">{resteCharge}</strong>.
+      </p>
+    </section>
+
+    <!-- Block 3: Fuel comparison -->
+    <section class="saviez-vous rounded-xl p-6">
+      <h3 class="text-lg font-bold text-brand-800 mb-3 font-heading">⚡ Fioul vs Granulés à {city.name}</h3>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="bg-white rounded-xl p-4 border border-red-200">
+          <h4 class="font-bold text-red-700 text-sm mb-2">❌ Chaudière fioul</h4>
+          <p class="font-data text-lg font-bold text-red-600">{annualCost + fuelSavings}€/an</p>
+          <p class="text-xs text-red-600">5 280 kg CO₂/an</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 border border-green-200">
+          <h4 class="font-bold text-green-700 text-sm mb-2">✅ Chaudière granulés</h4>
+          <p class="font-data text-lg font-bold text-accent-500">{annualCost}€/an</p>
+          <p class="text-xs text-green-600">~0 kg CO₂/an (bilan neutre)</p>
+        </div>
+      </div>
+      <p class="text-sm text-brand-700 mt-3">
+        Économie : <strong class="font-data text-accent-500">{fuelSavings}€/an</strong>, soit <strong class="font-data">{fuelSavings * 10}€ sur 10 ans</strong>.
+      </p>
+    </section>
+
+    <!-- Block 4: Aids -->
+    <section class="bg-white rounded-2xl shadow-sm border border-amber-200 p-6 md:p-8">
+      <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading">🏛️ Aides financières à {city.name} en 2026</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {siteConfig.aids.map((aid) => (
+          <div class="bg-brand-50 rounded-lg p-4 border border-amber-100">
+            <h3 class="font-bold text-brand-800 text-sm">{aid.name}</h3>
+            <p class="font-data font-bold text-accent-500 mt-1">{aid.amount}</p>
+            <p class="text-xs text-brand-600 mt-1">{aid.condition}</p>
+          </div>
+        ))}
+      </div>
+      <a href="/guides/aides-chaudiere-granules-2026" class="inline-block mt-4 text-accent-500 hover:text-accent-600 text-sm font-semibold transition-colors">
+        Guide complet des aides →
+      </a>
+    </section>
+
+    <!-- Block 5: FAQ locale -->
+    <FAQ items={localFaq} cityName={city.name} />
+
+    <!-- Block 6: Nearby cities -->
+    {nearbyCities.length > 0 && (
+      <section>
+        <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading">📍 Chaudière granulés près de {city.name}</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          {nearbyCities.map((nc) => (
+            <a href={"/prix-chaudiere-granules/" + nc.slug} class="bg-white border border-amber-200 rounded-xl px-4 py-3 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover">
+              <span class="font-semibold text-brand-800 group-hover:text-accent-500 text-sm">{nc.name}</span>
+              <span class="block text-xs text-brand-600">{nc.zip}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Block 7: CTA -->
+    <section>
+      <div class="cta-gradient rounded-2xl p-8 text-center text-white">
+        <h2 class="text-xl md:text-2xl font-bold mb-3 font-heading">Devis Chaudière Granulés à {city.name}</h2>
+        <p class="text-green-100 mb-5 text-sm">Artisans RGE Qualibois • Réponse sous 48h • Sans engagement</p>
+        <a href="/devis" class="inline-block bg-white text-accent-600 font-bold px-8 py-3.5 rounded-xl hover:bg-green-50 transition-colors shadow-lg">
+          🔥 Demander mes devis →
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

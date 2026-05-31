@@ -1,0 +1,206 @@
+---
+import { siteConfig } from '../../site.config';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogType?: string;
+  noindex?: boolean;
+  jsonLd?: object[];
+}
+
+const {
+  title,
+  description = siteConfig.description,
+  canonical,
+  ogType = 'website',
+  noindex = false,
+  jsonLd = [],
+} = Astro.props;
+
+const canonicalUrl = canonical
+  ? `https://${siteConfig.domain}${canonical}`
+  : Astro.url.href;
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalUrl} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:site_name" content={siteConfig.name} />
+  <meta property="og:locale" content="fr_FR" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Preconnect & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- JSON-LD Structured Data -->
+  {jsonLd.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+</head>
+<body class="min-h-screen flex flex-col" style="background-color: #FFFBEB;">
+  <!-- Header Navbar -->
+  <header id="main-nav" class="fixed top-0 left-0 right-0 z-50 navbar-scroll bg-transparent">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2 group">
+          <svg class="w-8 h-8 text-amber-500 group-hover:text-amber-400 transition-colors flame-pulse" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2c0 5-4.5 7.5-4.5 12.5C7.5 17.5 9.5 20 12 22c2.5-2 4.5-4.5 4.5-7.5C16.5 9.5 12 7 12 2z"/>
+            <path d="M12 6c0 3-2.5 4.5-2.5 7.5C9.5 15.5 10.5 17 12 18c1.5-1 2.5-2.5 2.5-4.5C14.5 10.5 12 9 12 6z" fill="rgba(255,255,255,0.3)"/>
+          </svg>
+          <span class="font-bold text-lg text-white group-hover:text-amber-200 transition-colors font-heading">
+            {siteConfig.domain}
+          </span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-amber-100/80">
+          <a href="/" class="hover:text-white transition-colors">Accueil</a>
+          <a href="/guides" class="hover:text-white transition-colors">Guides</a>
+          <a href="/marques" class="hover:text-white transition-colors">Marques</a>
+          <a href="/annuaire" class="hover:text-white transition-colors">Annuaire</a>
+          <a href="/faq" class="hover:text-white transition-colors">FAQ</a>
+          <a href="/glossaire" class="hover:text-white transition-colors">Glossaire</a>
+          <a href="/simulateur-prix" class="hover:text-white transition-colors">Simulateur</a>
+        </nav>
+        <a href="/devis" class="cta-gradient text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-all shadow-md hover:shadow-lg">
+          🔥 Devis Gratuit →
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="flex-1 pt-16">
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer-bg py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="w-6 h-6 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2c0 5-4.5 7.5-4.5 12.5C7.5 17.5 9.5 20 12 22c2.5-2 4.5-4.5 4.5-7.5C16.5 9.5 12 7 12 2z"/>
+            </svg>
+            <span class="text-white font-bold font-heading">{siteConfig.name}</span>
+          </div>
+          <p class="text-sm leading-relaxed text-amber-200/70">{siteConfig.tagline}</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4 font-heading">Guides populaires</h4>
+          <ul class="space-y-2 text-sm text-amber-200/70">
+            <li><a href="/guides/prix-chaudiere-granules-2026" class="hover:text-white transition-colors">Prix Chaudière Granulés</a></li>
+            <li><a href="/guides/aides-chaudiere-granules-2026" class="hover:text-white transition-colors">Aides MaPrimeRénov'</a></li>
+            <li><a href="/guides/comparatif-marques-chaudiere-granules" class="hover:text-white transition-colors">Comparatif Marques</a></li>
+            <li><a href="/guides/remplacement-chaudiere-fioul-granules" class="hover:text-white transition-colors">Remplacement Fioul</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4 font-heading">Villes populaires</h4>
+          <ul class="space-y-2 text-sm text-amber-200/70">
+            <li><a href="/prix-chaudiere-granules/paris" class="hover:text-white transition-colors">Paris</a></li>
+            <li><a href="/prix-chaudiere-granules/lyon" class="hover:text-white transition-colors">Lyon</a></li>
+            <li><a href="/prix-chaudiere-granules/bordeaux" class="hover:text-white transition-colors">Bordeaux</a></li>
+            <li><a href="/prix-chaudiere-granules/toulouse" class="hover:text-white transition-colors">Toulouse</a></li>
+            <li><a href="/prix-chaudiere-granules/strasbourg" class="hover:text-white transition-colors">Strasbourg</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4 font-heading">Informations</h4>
+          <ul class="space-y-2 text-sm text-amber-200/70">
+            <li>Service 100% gratuit</li>
+            <li>Artisans certifiés RGE Qualibois</li>
+            <li>Données indicatives 2026</li>
+            <li class="pt-2"><a href="/mentions-legales" class="hover:text-white transition-colors">Mentions légales</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-amber-900/50 pt-6 text-center text-xs text-amber-200/50">
+        <p>© {new Date().getFullYear()} {siteConfig.name} — Tous droits réservés. Les prix sont donnés à titre indicatif.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky Mobile CTA -->
+  <div id="sticky-cta" class="fixed bottom-0 left-0 right-0 md:hidden z-40 bg-white border-t border-amber-200 p-3 shadow-xl sticky-cta-enter transition-transform duration-300" style="transform: translateY(100%);">
+    <a href="#devis-form" class="block w-full cta-gradient text-white text-center py-3.5 rounded-xl font-bold text-base shadow-lg transition-all">
+      🔥 Devis Chaudière Granulés — Gratuit
+    </a>
+  </div>
+
+  <script is:inline>
+  (function() {
+    // Navbar scroll effect
+    var nav = document.getElementById('main-nav');
+    if (nav) {
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+          nav.classList.add('navbar-scrolled');
+        } else {
+          nav.classList.remove('navbar-scrolled');
+        }
+      }, { passive: true });
+    }
+
+    // Sticky CTA
+    var cta = document.getElementById('sticky-cta');
+    if (!cta) return;
+
+    if (window.location.pathname === '/devis' || window.location.pathname === '/devis/') {
+      cta.style.display = 'none';
+      return;
+    }
+
+    var formVisible = false;
+    var scrolledPastHero = false;
+
+    function updateCTA() {
+      if (formVisible || !scrolledPastHero) {
+        cta.style.transform = 'translateY(100%)';
+      } else {
+        cta.style.transform = 'translateY(0)';
+      }
+    }
+
+    window.addEventListener('scroll', function() {
+      scrolledPastHero = window.scrollY > 300;
+      updateCTA();
+    }, { passive: true });
+
+    var formEl = document.getElementById('devis-form');
+    if (formEl && 'IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function(entries) {
+        formVisible = entries[0].isIntersecting;
+        updateCTA();
+      }, { threshold: 0.3 });
+      observer.observe(formEl);
+    }
+
+    cta.querySelector('a').addEventListener('click', function(e) {
+      if (formEl) {
+        e.preventDefault();
+        formEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  })();
+  </script>
+</body>
+</html>

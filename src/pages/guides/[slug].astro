@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import QuoteWidget from '../../components/QuoteWidget.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { siteConfig } from '../../../site.config';
+import { guides, type Guide } from '../../data/guides';
+
+export function getStaticPaths() {
+  return guides.map(guide => ({
+    params: { slug: guide.slug },
+    props: { guide },
+  }));
+}
+
+const { guide } = Astro.props as { guide: Guide };
+const relatedGuides = guides.filter(g => g.slug !== guide.slug).slice(0, 3);
+
+const title = guide.metaTitle + " | " + siteConfig.name;
+const description = guide.metaDescription;
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": guide.title,
+    "description": guide.metaDescription,
+    "image": "https://" + siteConfig.domain + guide.image,
+    "datePublished": guide.date + "T08:00:00+01:00",
+    "author": {
+      "@type": "Organization",
+      "name": siteConfig.name
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": siteConfig.name,
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://" + siteConfig.domain + "/favicon.svg"
+      }
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://" + siteConfig.domain },
+      { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://" + siteConfig.domain + "/guides" },
+      { "@type": "ListItem", "position": 3, "name": guide.title },
+    ]
+  }
+];
+---
+
+<BaseLayout title={title} description={description} canonical={"/guides/" + guide.slug} jsonLd={jsonLd}>
+  <section class="gradient-hero text-white py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[
+        { label: "Guides", href: "/guides" },
+        { label: guide.title, href: "/guides/" + guide.slug },
+      ]} />
+
+      <div class="grid lg:grid-cols-5 gap-10 items-start mt-6">
+        <div class="lg:col-span-3">
+          <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm mb-4">
+            <span>{guide.emoji}</span>
+            <span>{guide.category} • Publié le {guide.date}</span>
+          </div>
+
+          <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-4 font-heading">
+            {guide.title}
+          </h1>
+          <p class="text-amber-200/80 leading-relaxed mb-6 max-w-xl text-sm md:text-base">
+            {guide.excerpt}
+          </p>
+
+          <div class="inline-flex items-center gap-2 text-xs text-amber-200/60 font-semibold bg-white/5 px-3 py-1.5 rounded-md">
+            <span>⏱️ Temps de lecture : {guide.readTime}</span>
+          </div>
+        </div>
+        <div class="lg:col-span-2">
+          <QuoteWidget keyword={guide.title} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid lg:grid-cols-12 gap-8 items-start">
+      <!-- Article Content -->
+      <article class="lg:col-span-8 bg-white rounded-2xl border border-amber-200 shadow-sm p-6 md:p-10 prose prose-amber max-w-none text-brand-700 leading-relaxed">
+        <img src={guide.image} alt={guide.title} class="w-full h-80 object-cover rounded-2xl mb-8 border border-amber-100 shadow-sm" />
+        <div set:html={guide.content} />
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
+        <!-- ViteUnDevis Widget in Sidebar -->
+        <QuoteWidget keyword={"Installation " + guide.title} />
+
+        <!-- Interactive simulator CTA -->
+        <div class="bg-brand-700 text-white rounded-2xl border border-brand-800 p-6 space-y-4 shadow-md">
+          <span class="text-3xl">🧮</span>
+          <h3 class="font-bold text-lg font-heading text-amber-300">Simulez votre reste à charge en 2 minutes</h3>
+          <p class="text-xs text-amber-200/80 leading-relaxed">
+            Notre calculateur interactif évalue gratuitement la puissance nécessaire pour votre logement et simule le montant exact de vos aides financières nationales 2026.
+          </p>
+          <a href="/simulateur-prix" class="block w-full text-center bg-white text-accent-600 font-bold py-3 rounded-xl hover:bg-green-50 transition-colors shadow text-xs">
+            ⚡ Lancer le simulateur gratuit →
+          </a>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Related Articles -->
+    <section class="mt-16 border-t border-amber-200 pt-12">
+      <h2 class="text-2xl font-bold text-brand-800 mb-8 font-heading text-center">
+        📖 Articles et Guides recommandés
+      </h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        {relatedGuides.map((rg) => (
+          <div class="bg-white rounded-2xl border border-amber-200 shadow-sm overflow-hidden flex flex-col justify-between card-hover">
+            <div>
+              <img src={rg.image} alt={rg.title} class="w-full h-40 object-cover border-b border-amber-100" />
+              <div class="p-5 space-y-2">
+                <span class="text-[10px] font-semibold text-brand-600 uppercase tracking-wider bg-brand-50 px-2 py-0.5 rounded">
+                  {rg.category}
+                </span>
+                <h3 class="font-bold text-brand-800 font-heading leading-tight text-sm line-clamp-2">
+                  {rg.title}
+                </h3>
+              </div>
+            </div>
+            <div class="p-5 border-t border-amber-100 flex items-center justify-between">
+              <span class="text-[10px] text-brand-600 font-medium">⏱️ {rg.readTime}</span>
+              <a href={`/guides/${rg.slug}`} class="cta-gradient text-white text-[10px] font-bold px-3 py-1.5 rounded-lg transition-all shadow-sm">
+                Lire →
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

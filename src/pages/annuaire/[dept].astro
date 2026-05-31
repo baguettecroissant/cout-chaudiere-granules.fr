@@ -1,0 +1,178 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import QuoteWidget from '../../components/QuoteWidget.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { siteConfig } from '../../../site.config';
+import { getAllDepartments, getCitiesByDepartment } from '../../lib/cities';
+
+export function getStaticPaths() {
+  const departments = getAllDepartments();
+  return departments.map(dept => ({
+    params: { dept: dept.code.toLowerCase() },
+    props: { dept },
+  }));
+}
+
+const { dept } = Astro.props;
+const cities = getCitiesByDepartment(dept.code);
+const allDepartments = getAllDepartments();
+const nearbyDepts = allDepartments.filter(d => d.region === dept.region && d.code !== dept.code).slice(0, 6);
+
+const zone = dept.region.includes('Hauts-de-France') || dept.region.includes('Grand Est') || dept.region.includes('Bourgogne') ? 'H1' :
+             dept.region.includes('PACA') || dept.region.includes('Corse') || dept.region.includes('Occitanie') ? 'H3' : 'H2';
+
+const title = "Chaudière Granulés " + dept.name + " (" + dept.code + ") — Prix & Installateurs RGE 2026";
+const description = "Comparez les prix de chaudière à granulés dans le " + dept.name + " (" + dept.code + "). " + cities.length + " villes couvertes. Devis gratuits d'installateurs RGE en " + dept.region + ".";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Chaudière Granulés - " + dept.name,
+    "description": description,
+    "url": "https://" + siteConfig.domain + "/annuaire/" + dept.code.toLowerCase(),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://" + siteConfig.domain },
+      { "@type": "ListItem", "position": 2, "name": "Annuaire", "item": "https://" + siteConfig.domain + "/annuaire" },
+      { "@type": "ListItem", "position": 3, "name": dept.name },
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={"/annuaire/" + dept.code.toLowerCase()}
+  jsonLd={jsonLd}
+>
+  <section class="gradient-hero text-white py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[
+        { label: "Annuaire", href: "/annuaire" },
+        { label: dept.name, href: "/annuaire/" + dept.code.toLowerCase() },
+      ]} />
+
+      <div class="grid lg:grid-cols-5 gap-10 items-start mt-6">
+        <div class="lg:col-span-3">
+          <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm mb-4">
+            <span>📍</span>
+            <span>{dept.region}</span>
+          </div>
+
+          <h1 class="text-2xl md:text-4xl font-extrabold leading-tight mb-4 font-heading">
+            Chaudière à Granulés dans le {dept.name} ({dept.code})
+          </h1>
+          <p class="text-amber-200/80 leading-relaxed mb-6 max-w-xl">
+            Trouvez un installateur certifié RGE Qualibois dans le {dept.name}.
+            <strong class="text-white">{cities.length} villes couvertes</strong>, devis gratuits.
+          </p>
+
+          <div class="flex flex-wrap gap-3 mb-6">
+            <span class="bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1.5 rounded-full text-sm">✓ {cities.length} villes</span>
+            <span class="bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1.5 rounded-full text-sm">✓ Zone {zone}</span>
+            <span class="bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1.5 rounded-full text-sm">✓ RGE Qualibois</span>
+          </div>
+
+          <a href="/devis" class="inline-block cta-gradient text-white font-bold px-6 py-3.5 rounded-xl transition-all shadow-lg text-base">
+            🔥 Devis Gratuit dans le {dept.name}
+          </a>
+        </div>
+        <div class="lg:col-span-2" id="devis-form">
+          <QuoteWidget keyword={"Chaudière granulés " + dept.name} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+    <!-- Local Info -->
+    <section class="bg-white rounded-2xl shadow-sm border border-amber-200 p-6 md:p-8">
+      <h2 class="text-2xl font-bold text-brand-800 mb-4 font-heading">
+        🏠 Chaudière granulés dans le {dept.name}
+      </h2>
+      <div class="prose max-w-none text-brand-700 space-y-4">
+        <p>
+          Le département du <strong>{dept.name}</strong> ({dept.code}), situé en région <strong>{dept.region}</strong>,
+          est classé en <strong>zone climatique {zone}</strong>.
+          {zone === 'H1' ? " Les hivers rigoureux rendent la chaudière à granulés particulièrement rentable : les économies sur la facture de chauffage sont maximales. Un modèle de 20-25 kW est recommandé pour une maison de 120 m²." :
+           zone === 'H3' ? " Le climat doux permet d'opter pour une chaudière de puissance modérée (14-18 kW), avec un coût annuel de chauffage parmi les plus bas de France." :
+           " Le climat tempéré offre un excellent compromis. Un modèle standard de 16-22 kW convient à la majorité des maisons du département."}
+        </p>
+      </div>
+    </section>
+
+    <!-- Price Range -->
+    <section class="bg-gradient-to-r from-brand-50 to-amber-50 rounded-2xl border border-amber-200 p-6 md:p-8">
+      <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading">
+        💰 Prix moyen dans le {dept.name}
+      </h2>
+      <div class="grid sm:grid-cols-3 gap-4 mb-4">
+        <div class="bg-white rounded-xl p-4 text-center border border-amber-100">
+          <span class="block text-sm text-brand-600 mb-1">Standard</span>
+          <span class="block text-xl font-bold text-brand-800 font-data">{zone === 'H1' ? '10 500€' : zone === 'H3' ? '8 500€' : '9 500€'}</span>
+          <span class="block text-xs text-brand-600">15-20 kW posé</span>
+        </div>
+        <div class="bg-white rounded-xl p-4 text-center border border-accent-200 ring-2 ring-accent-100">
+          <span class="block text-sm text-accent-500 font-medium mb-1">Condensation</span>
+          <span class="block text-xl font-bold text-brand-800 font-data">{zone === 'H1' ? '15 000€' : zone === 'H3' ? '12 000€' : '13 500€'}</span>
+          <span class="block text-xs text-brand-600">20 kW posé</span>
+        </div>
+        <div class="bg-white rounded-xl p-4 text-center border border-amber-100">
+          <span class="block text-sm text-brand-600 mb-1">Automatique</span>
+          <span class="block text-xl font-bold text-brand-800 font-data">{zone === 'H1' ? '20 000€' : zone === 'H3' ? '16 000€' : '18 000€'}</span>
+          <span class="block text-xs text-brand-600">25-35 kW posé</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cities Grid -->
+    <section>
+      <h2 class="text-2xl font-bold text-brand-800 mb-2 font-heading">📍 Villes du {dept.name}</h2>
+      <p class="text-brand-600 text-sm mb-6">Cliquez pour voir les prix et obtenir vos devis</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+        {cities.map((city) => (
+          <a
+            href={"/prix-chaudiere-granules/" + city.slug}
+            class="bg-white border border-amber-200 rounded-xl px-4 py-3 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"
+          >
+            <span class="font-semibold text-brand-800 group-hover:text-accent-500 text-sm block">{city.name}</span>
+            <span class="text-xs text-brand-600">{city.zip}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Nearby departments -->
+    {nearbyDepts.length > 0 && (
+      <section>
+        <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading">🗺️ Départements voisins</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {nearbyDepts.map((nd) => (
+            <a href={"/annuaire/" + nd.code.toLowerCase()} class="bg-white border border-amber-200 rounded-xl px-5 py-4 hover:border-accent-400 hover:shadow-md transition-all group card-hover">
+              <span class="font-semibold text-brand-800 group-hover:text-accent-500 text-sm block">{nd.name} ({nd.code})</span>
+              <span class="text-xs text-brand-600">{nd.count} {nd.count > 1 ? 'villes' : 'ville'} • {nd.region}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- CTA -->
+    <section class="pb-20 md:pb-0">
+      <div class="cta-gradient rounded-2xl p-8 text-center text-white">
+        <h2 class="text-xl md:text-2xl font-bold mb-3 font-heading">
+          Devis Chaudière Granulés — {dept.name}
+        </h2>
+        <p class="text-green-100 mb-5 text-sm">Gratuit • Sans engagement • Artisans RGE Qualibois</p>
+        <a href="/devis" class="inline-block bg-white text-accent-600 font-bold px-8 py-3.5 rounded-xl hover:bg-green-50 transition-colors shadow-lg">
+          Demander mes devis →
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

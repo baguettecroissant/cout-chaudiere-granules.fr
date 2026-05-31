@@ -1,0 +1,240 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* === PALETTE "BOIS & FLAMME" — Design System cout-chaudiere-granules.fr === */
+@theme {
+  /* Brun chaud — tons bois, terre, granulés */
+  --color-brand-50: #FEF3C7;
+  --color-brand-100: #FDE68A;
+  --color-brand-200: #FCD34D;
+  --color-brand-500: #B45309;
+  --color-brand-600: #92400E;
+  --color-brand-700: #78350F;
+  --color-brand-800: #451A03;
+  --color-brand-900: #331207;
+
+  /* Vert émeraude — CTA, boutons action (éco, nature) */
+  --color-accent-400: #34D399;
+  --color-accent-500: #059669;
+  --color-accent-600: #047857;
+
+  /* Ambre — bordures, badges, alertes prix */
+  --color-amber-400: #FBBF24;
+  --color-amber-500: #F59E0B;
+  --color-amber-600: #D97706;
+
+  /* Flame rouge */
+  --color-flame: #EF4444;
+
+  /* Dark backgrounds */
+  --color-dark: #451A03;
+}
+
+/* === TYPOGRAPHIE === */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Source Sans 3', 'Source Sans Pro', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #451A03;
+  background-color: #FFFBEB;
+}
+
+h1, h2, h3, h4, h5, h6,
+.font-heading {
+  font-family: 'DM Serif Display', 'Georgia', serif;
+}
+
+.font-data,
+.font-mono {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+/* === HERO GRADIENT — Brun-doré avec overlay === */
+.gradient-hero {
+  background: linear-gradient(135deg, rgba(120, 53, 15, 0.92) 0%, rgba(180, 83, 9, 0.85) 50%, rgba(146, 64, 14, 0.78) 100%);
+}
+
+.gradient-hero-image {
+  background-image: var(--hero-bg, none);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.gradient-hero-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(120, 53, 15, 0.88), rgba(180, 83, 9, 0.75));
+  z-index: 0;
+}
+.gradient-hero-image > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* === CTA GRADIENT — Vert émeraude === */
+.cta-gradient {
+  background: linear-gradient(135deg, #059669, #047857);
+}
+.cta-gradient:hover {
+  background: linear-gradient(135deg, #047857, #065F46);
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(5, 150, 105, 0.4);
+}
+
+/* === SECTION GRADIENT === */
+.section-gradient {
+  background: linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 100%);
+}
+
+/* === MICRO-ANIMATIONS === */
+
+/* Flamme pulsante sur les badges */
+@keyframes flame-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+.flame-pulse {
+  animation: flame-pulse 2s ease-in-out infinite;
+}
+
+/* Entrée progressive des sections */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+  animation: fade-up 0.6s ease-out both;
+}
+
+/* Compteur animé */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.count-up {
+  animation: count-up 0.8s ease-out both;
+  animation-delay: 0.3s;
+}
+
+/* Cards hover effect */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(146, 64, 14, 0.15), 0 8px 10px -6px rgba(146, 64, 14, 0.1);
+}
+
+/* CTA button arrow animation */
+@keyframes arrow-bounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+.arrow-animate:hover .arrow-icon {
+  animation: arrow-bounce 0.6s ease-in-out infinite;
+}
+
+/* === ViteUnDevis Widget Overrides === */
+.vud-widget-container iframe {
+  width: 100% !important;
+  min-height: 400px;
+}
+
+.vud-widget {
+  all: initial;
+  display: block;
+  width: 100%;
+  min-height: 400px;
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+.vud-widget * {
+  all: revert;
+  box-sizing: border-box;
+}
+
+.vud-widget a {
+  color: #059669;
+  text-decoration: underline;
+}
+
+.vud-widget img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* === Sticky CTA Animation === */
+.sticky-cta-enter {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* === FAQ Accordion === */
+details summary {
+  cursor: pointer;
+  list-style: none;
+}
+details summary::-webkit-details-marker {
+  display: none;
+}
+details[open] summary .faq-chevron {
+  transform: rotate(180deg);
+}
+.faq-chevron {
+  transition: transform 0.25s ease;
+}
+
+/* === Price Cards — Bord gauche ambre === */
+.price-card {
+  border-left: 4px solid #F59E0B;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.price-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.2);
+}
+
+/* === Saviez-vous cards === */
+.saviez-vous {
+  background: #FEF3C7;
+  border-left: 4px solid #F59E0B;
+}
+
+/* === Price tables === */
+.price-table th {
+  background: #FEF3C7;
+  color: #92400E;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 700;
+}
+.price-table td.price {
+  font-family: 'IBM Plex Mono', monospace;
+  color: #059669;
+  font-weight: 600;
+}
+.price-table tr:nth-child(even) {
+  background: #FFFBEB;
+}
+
+/* === Navbar scroll effect === */
+.navbar-scroll {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.navbar-scrolled {
+  background-color: rgba(120, 53, 15, 0.97) !important;
+  box-shadow: 0 4px 20px rgba(69, 26, 3, 0.3);
+}
+
+/* === Footer === */
+.footer-bg {
+  background-color: #78350F;
+  color: #FEF3C7;
+}

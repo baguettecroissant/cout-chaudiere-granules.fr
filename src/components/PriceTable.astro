@@ -1,0 +1,63 @@
+---
+import { siteConfig } from '../../site.config';
+---
+
+<div class="space-y-8" id="prix-table">
+  <div class="bg-white rounded-2xl border border-amber-200 shadow-sm p-6 md:p-8">
+    <h3 class="text-xl font-bold text-brand-800 mb-2 font-heading">
+      💰 Prix d'une Chaudière à Granulés par Technologie (2026)
+    </h3>
+    <p class="text-sm text-brand-600 mb-6">
+      Voici les coûts moyens constatés en France pour l'achat et la pose d'un système de chauffage aux granulés de bois :
+    </p>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm price-table border-collapse rounded-xl overflow-hidden">
+        <thead>
+          <tr>
+            <th class="px-4 py-3 text-left">Type de Chaudière</th>
+            <th class="px-4 py-3 text-left">Rendement</th>
+            <th class="px-4 py-3 text-left">Prix Pose Incluse (HT)</th>
+            <th class="px-4 py-3 text-left">Aides cumulables</th>
+          </tr>
+        </thead>
+        <tbody>
+          {siteConfig.pricing.map((p) => (
+            <tr class="border-b border-amber-100">
+              <td class="px-4 py-4">
+                <span class="font-bold block text-brand-800 text-sm">{p.service}</span>
+                <span class="text-xs text-brand-600 mt-0.5 block">{p.details}</span>
+              </td>
+              <td class="px-4 py-4 font-data font-semibold text-brand-700">{p.rendement}</td>
+              <td class="px-4 py-4 price font-data font-bold text-accent-500">{p.price}</td>
+              <td class="px-4 py-4 text-xs text-green-700 font-medium">Jusqu'à -70% d'aides 🌿</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-xs text-brand-600 mt-4 leading-relaxed italic">
+      ℹ️ {siteConfig.pricingNote}
+    </p>
+  </div>
+
+  <!-- Annex costs grid -->
+  <div class="bg-white rounded-2xl border border-amber-200 shadow-sm p-6 md:p-8">
+    <h3 class="text-xl font-bold text-brand-800 mb-2 font-heading">
+      🛠️ Coûts Annexes & Accessoires à Prévoir
+    </h3>
+    <p class="text-sm text-brand-600 mb-6">
+      L'installation complète d'une chaudière nécessite parfois des adaptations techniques complémentaires :
+    </p>
+
+    <div class="grid sm:grid-cols-2 gap-4">
+      {siteConfig.annexCosts.map((c) => (
+        <div class="flex justify-between items-center bg-brand-50 p-4 rounded-xl border border-amber-100">
+          <span class="font-semibold text-brand-800 text-xs">{c.name}</span>
+          <span class="font-data font-bold text-sm text-accent-500">{c.price}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
