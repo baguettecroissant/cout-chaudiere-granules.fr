@@ -58,7 +58,7 @@ export const siteConfig = {
   // === MONÉTISATION ===
   viteundevis: {
     partnerId: "2353",
-    boxId: "6b7aa3c00e",
+    boxId: "e838806958",
     categoryId: "64",
   },
 

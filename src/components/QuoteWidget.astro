@@ -21,7 +21,7 @@ const { keyword = siteConfig.niche.name } = Astro.props;
 
   <!-- ViteUnDevis Widget Container -->
   <div class="p-6 bg-amber-50/30">
-    <div id="v6b7aa3c00ed" class="vud-widget-container min-h-[420px]">
+    <div id="ve838806958d" class="vud-widget-container min-h-[420px]">
       <div class="flex flex-col items-center justify-center py-12 text-brand-700/60 text-sm">
         <!-- Loader -->
         <svg class="animate-spin h-8 w-8 text-accent-500 mb-3" fill="none" viewBox="0 0 24 24">
@@ -33,15 +33,12 @@ const { keyword = siteConfig.niche.name } = Astro.props;
     </div>
 
     <!-- Inline script for loading the ViteUnDevis widget -->
-    <script is:inline define:vars={{ partnerId: siteConfig.viteundevis.partnerId, categoryId: siteConfig.viteundevis.categoryId }}>
-      window.vud_partenaire_id = partnerId;
-      window.vud_categorie_id = categoryId;
-      
-      const vud_js = document.createElement('script');
-      vud_js.type = 'text/javascript';
-      vud_js.src = '//www.viteundevis.com/6b7aa3c00e/' + partnerId + '/' + categoryId + '/';
-      
-      const s = document.getElementsByTagName('script')[0];
+    <script is:inline>
+      vud_partenaire_id = '2353';
+      vud_categorie_id = '64';
+      var vud_js = document.createElement('script'); vud_js.type = 'text/javascript';
+      vud_js.src = '//www.viteundevis.com/e838806958/'+vud_partenaire_id+'/'+vud_categorie_id+'/';
+      var s = document.getElementsByTagName('script')[0];
       s.parentNode.insertBefore(vud_js, s);
     </script>
   </div>
