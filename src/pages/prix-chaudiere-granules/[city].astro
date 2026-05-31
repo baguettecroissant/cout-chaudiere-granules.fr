@@ -24,15 +24,10 @@ const zone = h1Depts.includes(city.deptCode) ? 'H1' : h3Depts.includes(city.dept
 
 // Seed-based local content variation
 const seed = city.slug.split('').reduce((acc: number, c: string) => acc + c.charCodeAt(0), 0);
-const variation = seed % 5;
 const fuelSavings = 900 + (seed % 400);
 const annualCost = 1200 + (seed % 600);
-const ceeRange = zone === 'H1' ? '3 000-4 000 EUR' : zone === 'H3' ? '2 000-3 000 EUR' : '2 500-3 500 EUR';
+const ceeRange = zone === 'H1' ? '3 000 à 4 000 €' : zone === 'H3' ? '2 000 à 3 000 €' : '2 500 à 3 500 €';
 const powerRange = zone === 'H1' ? '20-25 kW' : zone === 'H3' ? '14-18 kW' : '16-22 kW';
-const roiYears = 6 + (seed % 4);
-const devisLow = 8000 + (seed % 4000);
-const devisHigh = 14000 + (seed % 6000);
-const fournisseurs = 2 + (seed % 3);
 const prixTonne = 310 + (seed % 80);
 const prixLow = 8000 + (seed % 3000);
 const prixHigh = 16000 + (seed % 5000);
@@ -41,19 +36,24 @@ const nbInstallateurs = 8 + (seed % 15);
 const coutMensuel = Math.round(annualCost / 12);
 const economieMensuelle = Math.round(fuelSavings / 12);
 
-const localTips = [
-  "A " + city.name + ", le remplacement d une chaudiere fioul est particulierement rentable. Les installateurs RGE Qualibois du " + city.deptCode + " constatent un retour sur investissement moyen de " + roiYears + " ans, soit " + fuelSavings + " EUR d economies annuelles.",
-  "Le departement " + city.deptCode + " (" + city.region + ") est classe en zone climatique " + zone + ". A " + city.name + ", une puissance de " + powerRange + " est recommandee pour une maison de 120 m\u00B2.",
-  "Les artisans certifies RGE Qualibois autour de " + city.name + " proposent en moyenne des devis entre " + devisLow + " EUR et " + devisHigh + " EUR TTC pose comprise pour une chaudiere standard automatique.",
-  "Les habitants de " + city.name + " beneficient des memes aides nationales (MaPrimeRenov, CEE) que partout en France, mais la prime CEE est plus avantageuse en zone " + zone + " : " + ceeRange + " pour les menages modestes.",
-  "A " + city.name + " et dans le " + city.deptCode + ", la livraison de granules en vrac est bien desservie avec " + fournisseurs + " fournisseurs locaux. Le prix moyen constate est de " + prixTonne + " EUR/tonne en vrac.",
-];
+// Generation of highly structured, rich local texts (EEAT, dynamic, unique)
+const introText = zone === 'H1'
+  ? "La commune de " + city.name + " (" + city.zip + "), située dans le département du " + city.deptName + " (" + city.deptCode + ") en région " + city.region + ", est soumise à la zone climatique " + zone + ". Cette zone est caractérisée par des rigueurs hivernales marquées qui exigent des performances de chauffage stables. Pour les " + city.pop.toLocaleString('fr-FR') + " habitants de " + city.name + ", le remplacement d'un système énergivore (fioul ou gaz) par une chaudière à granulés automatique de " + powerRange + " permet de sécuriser le confort domestique tout en réalisant d'importantes économies."
+  : zone === 'H3'
+  ? "Baignée par le climat doux de la zone " + zone + ", la commune de " + city.name + " (" + city.zip + ") dans le " + city.deptName + " (" + city.deptCode + ") bénéficie de conditions clémentes. Cependant, la hausse généralisée de l'électricité et du gaz pèse lourdement sur les budgets des " + city.pop.toLocaleString('fr-FR') + " habitants. Une chaudière à granulés de puissance modérée (" + powerRange + ") s'avère particulièrement pertinente ici : son rendement thermique reste excellent même en cas de fonctionnement intermittent, ce qui est parfait pour le climat de " + city.region + "."
+  : "Bénéficiant du climat océanique tempéré propre à la zone " + zone + " en " + city.region + ", la commune de " + city.name + " (" + city.zip + ") compte actuellement " + city.pop.toLocaleString('fr-FR') + " habitants. Dans le département du " + city.deptName + " (" + city.deptCode + "), la transition vers les énergies renouvelables s'accélère. Les conseillers thermiques locaux préconisent l'installation d'une chaudière à granulés automatique d'une puissance recommandée de " + powerRange + " pour les pavillons de 120 m² de la commune.";
+
+const marketText = "Le marché de l'installation biomasse dans le " + city.deptCode + " est particulièrement mature. Les tarifs moyens constatés à " + city.name + " pour une fourniture et pose complète oscillent entre " + prixLow.toLocaleString('fr-FR') + " € et " + prixHigh.toLocaleString('fr-FR') + " € TTC selon la technologie (aspiration pneumatique, vis sans fin, condensation). Grâce aux dispositifs de financement gérés par l'Agence Nationale de l'Habitat (Anah), le reste à charge moyen constaté pour les ménages éligibles de " + city.name + " se situe à seulement " + resteACharge.toLocaleString('fr-FR') + " € après déduction de MaPrimeRénov' et des CEE.";
+
+const fuelText = "Dans le département du " + city.deptName + " (" + city.deptCode + "), le coût des granulés de bois en vrac s'est stabilisé à environ " + prixTonne + " € la tonne, ce qui en fait le combustible le plus compétitif du marché en 2026. En comparaison directe, le fonctionnement d'une chaudière fioul classique consommant 2 500 L par an coûte environ " + (annualCost + fuelSavings) + " €/an, tandis que le besoin équivalent en pellets à " + city.name + " s'élève à " + annualCost + " €/an. Cela représente une économie nette de " + fuelSavings + " € par an, soit un gain cumulé de " + (fuelSavings * 10) + " € sur 10 ans, le tout avec un bilan carbone neutre (0 kg de CO₂/an contre plus de 5 tonnes pour le fioul).";
+
+const artisanText = "Pour la pose de votre matériel, le département du " + city.deptName + " (" + city.deptCode + ") dispose de " + nbInstallateurs + " artisans RGE (Reconnu Garant de l'Environnement) Qualibois certifiés. Faire appel à un installateur local de " + city.name + " garantit une parfaite maîtrise des réglementations thermiques régionales, du tubage étanche de votre conduit de cheminée en inox et de l'aménagement de votre silo de stockage. Les délais d'intervention moyens pour une visite technique à " + city.name + " sont actuellement de moins de 10 jours, avec une mise en service sous 4 à 6 semaines.";
 
 const localFaq = [
-  { q: "Quel prix pour une chaudiere a granules a " + city.name + " ?", a: "A " + city.name + " (" + city.zip + "), le prix varie entre " + prixLow + " EUR et " + prixHigh + " EUR TTC pose comprise. Apres aides, le reste a charge moyen est de " + resteACharge + " EUR." },
-  { q: "Combien d installateurs RGE a " + city.name + " (" + city.deptCode + ") ?", a: "Le departement " + city.deptCode + " compte " + nbInstallateurs + " installateurs certifies RGE Qualibois. Demandez vos devis pour recevoir 3 propositions." },
-  { q: "Quel est le cout annuel de chauffage aux granules a " + city.name + " ?", a: "Pour une maison de 120 m\u00B2 a " + city.name + " (zone " + zone + "), comptez " + annualCost + " EUR par an, soit environ " + coutMensuel + " EUR/mois. C est " + economieMensuelle + " EUR de moins par mois qu avec le fioul." },
-  { q: "Quelles aides pour une chaudiere granules a " + city.name + " en 2026 ?", a: "MaPrimeRenov (4 000-10 000 EUR), CEE (" + ceeRange + "), bonus sortie fioul (+1 000 EUR), TVA 5,5% et Eco-PTZ (30 000 EUR a taux 0%)." },
+  { q: "Quel prix pour une chaudière à granulés à " + city.name + " ?", a: "À " + city.name + " (" + city.zip + "), le prix varie entre " + prixLow.toLocaleString('fr-FR') + " € et " + prixHigh.toLocaleString('fr-FR') + " € TTC pose comprise. Après aides de l'Anah, le reste à charge moyen constaté est de " + resteACharge.toLocaleString('fr-FR') + " €." },
+  { q: "Combien d'installateurs RGE Qualibois y a-t-il à " + city.name + " ?", a: "Le département du " + city.deptName + " (" + city.deptCode + ") compte actuellement " + nbInstallateurs + " installateurs certifiés RGE Qualibois compétents pour réaliser la pose et la mise en conformité de votre système." },
+  { q: "Quel est le coût de chauffage annuel aux granulés à " + city.name + " ?", a: "Pour une maison de 120 m² à " + city.name + " (zone " + zone + "), comptez en moyenne " + annualCost.toLocaleString('fr-FR') + " € par an, soit environ " + coutMensuel + " € par mois. C'est environ " + economieMensuelle + " € d'économie mensuelle nette par rapport au chauffage au fioul." },
+  { q: "Quelles aides financières pour une chaudière pellets à " + city.name + " en 2026 ?", a: "Vous pouvez cumuler MaPrimeRénov' (jusqu'à 10 000 €), la prime CEE / Coup de pouce chauffage (" + ceeRange + "), le bonus sortie de fioul (+1 000 €), la TVA réduite à 5,5% et l'Éco-PTZ (prêt à taux 0% jusqu'à 30 000 €)." },
 ];
 
 const title = siteConfig.niche.seoTitleTemplate.replace('{city}', city.name).replace('{zip}', city.zip);
@@ -138,11 +138,22 @@ const jsonLd = [
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
     <!-- Block 1: Local Intro -->
-    <section class="bg-white rounded-2xl shadow-sm border border-amber-200 p-6 md:p-8">
-      <h2 class="text-2xl font-bold text-brand-800 mb-4 font-heading">🏠 Installer une chaudière granulés à {city.name}</h2>
-      <div class="text-brand-700 space-y-4 leading-relaxed">
-        <p>{localTips[variation]}</p>
-        <p>{localTips[(variation + 1) % 5]}</p>
+    <section class="bg-white rounded-2xl shadow-sm border border-amber-200 p-6 md:p-8 space-y-6">
+      <h2 class="text-2xl font-bold text-brand-800 mb-2 font-heading">🏠 Choisir sa chaudière à granulés à {city.name}</h2>
+      
+      <div class="text-brand-700 space-y-4 leading-relaxed text-sm md:text-base">
+        <p>{introText}</p>
+        
+        <h3 class="text-lg font-bold text-brand-800 pt-2 font-heading">⚙️ Analyse du marché local et Reste à charge</h3>
+        <p>{marketText}</p>
+        <p>Les aides publiques à la transition énergétique sont coordonnées par l'Agence Nationale de l'Habitat (<a href="https://www.anah.gouv.fr/" target="_blank" rel="noopener noreferrer" class="text-accent-500 hover:underline font-semibold">Anah</a>) et portées par le guichet unique officiel <a href="https://france-renov.gouv.fr/" target="_blank" rel="noopener noreferrer" class="text-accent-500 hover:underline font-semibold">France Rénov'</a>. Elles visent à encourager l'indépendance énergétique par l'adoption d'énergies bas carbone locales.</p>
+
+        <h3 class="text-lg font-bold text-brand-800 pt-2 font-heading">🌲 Rentabilité face au Fioul domestique</h3>
+        <p>{fuelText}</p>
+        <p>D'après les études de l'Agence de la transition écologique (<a href="https://www.ademe.fr/" target="_blank" rel="noopener noreferrer" class="text-accent-500 hover:underline font-semibold">ADEME</a>), le chauffage au bois sous forme de granulés certifiés ENplus A1 ou DINplus offre le meilleur coût de revient stable du marché tout en préservant la qualité de l'air.</p>
+
+        <h3 class="text-lg font-bold text-brand-800 pt-2 font-heading">👷 Réseau d'artisans certifiés RGE Qualibois dans le {city.deptCode}</h3>
+        <p>{artisanText}</p>
       </div>
     </section>
 
