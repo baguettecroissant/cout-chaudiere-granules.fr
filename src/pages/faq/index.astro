@@ -4,11 +4,89 @@ import { siteConfig } from '../../../site.config';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import FAQ from '../../components/FAQ.astro';
 
+const budgetFaq = [
+  {
+    q: "Quel est le prix moyen d'une chaudière à granulés en 2026, pose comprise ?",
+    a: "Le tarif complet varie généralement entre <strong>8 000 € et 22 000 € TTC pose comprise</strong> en 2026. Cette fourchette dépend essentiellement de la puissance requise (ex. : 12 à 25 kW), du niveau d'automatisation (trémie manuelle vs aspiration pneumatique) et du choix du silo. Pour une chaudière standard à vis sans fin avec silo en kit de taille moyenne, comptez environ <strong>11 000 € à 14 000 € TTC posée</strong> avant déduction des aides."
+  },
+  {
+    q: "Quelle est la durée d'amortissement de ce type d'installation ?",
+    a: "Le temps de retour sur investissement moyen est estimé entre <strong>4 et 7 ans</strong>. Il est particulièrement court (4 à 5 ans) si vous remplacez un chauffage au fioul domestique ou des convecteurs électriques énergivores. Les économies de combustible annuelles générées, combinées aux aides initiales massives (MaPrimeRénov' et CEE), permettent d'amortir le reste à charge très rapidement."
+  },
+  {
+    q: "Le prix des granulés de bois (pellets) est-il stable face à l'électricité ou au gaz ?",
+    a: "Oui, très stable. Après une période de forte spéculation en 2022-2023, le marché du granulé de bois s'est solidement restructuré en France grâce à la création de nouvelles usines de production sur le territoire national. En 2026, le prix s'est stabilisé entre <strong>300 € et 420 € la tonne en vrac</strong> (livrée). Le pellet reste le combustible de chauffage central le moins cher et le plus stable du marché."
+  },
+  {
+    q: "Combien coûte l'entretien annuel obligatoire ?",
+    a: "Le coût d'un entretien annuel complet varie de <strong>150 € à 350 €</strong>. Ce tarif englobe généralement la visite technique de nettoyage et de contrôle de la chaudière (obligatoire une fois par an) ainsi que les <strong>deux ramonages mécaniques obligatoires</strong> de votre conduit de fumée (dont un réalisé en période d'activité de chauffe)."
+  }
+];
+
+const aidsFaq = [
+  {
+    q: "Quelles sont les aides cumulables en 2026 pour l'achat d'une chaudière biomasse ?",
+    a: "Vous pouvez cumuler jusqu'à 5 aides majeures pour financer vos travaux : <strong>MaPrimeRénov'</strong> (jusqu'à 10 000 €), la <strong>Prime Énergie CEE / Coup de pouce</strong> (2 500 € à 4 500 €), le <strong>Bonus Sortie de Fioul de 1 000 €</strong> (si remplacement d'une cuve fioul), une <strong>TVA réduite à 5,5 %</strong> appliquée directement sur la facture, et l'<strong>Éco-PTZ</strong> (prêt à taux 0 % jusqu'à 30 000 € sur 15 ans) pour financer le reste à charge."
+  },
+  {
+    q: "La certification RGE Qualibois de l'installateur est-elle obligatoire ?",
+    a: "Oui, elle est <strong>strictement obligatoire</strong> pour pouvoir prétendre à la moindre aide publique ou privée (Anah, CEE, PTZ). L'artisan doit posséder la qualification <strong>RGE Qualibois module Eau</strong> active le jour de la signature de votre devis. Refusez toute signature si le certificat RGE de l'entreprise n'est pas fourni à jour."
+  },
+  {
+    q: "Peut-on obtenir des aides de l'Anah si l'on est propriétaire bailleur ?",
+    a: "Oui, les propriétaires bailleurs sont pleinement éligibles à MaPrimeRénov' pour des logements loués en tant résidence principale (dans la limite de 3 logements par bailleur sur 5 ans). En revanche, les résidences secondaires ne sont pas éligibles aux aides directes de l'Anah (mais peuvent prétendre aux primes CEE)."
+  },
+  {
+    q: "Comment monter un dossier de demande d'aides sans risquer un rejet ?",
+    a: "La règle d'or absolue est de <strong>créer vos comptes en ligne et de déposer votre dossier d'aides AVANT de signer le devis</strong> ou de verser un acompte à l'artisan. Tout dossier dont le devis est signé ou daté antérieurement à la demande sur les portails officiels de l'Anah ou du signataire CEE sera <strong>définitivement rejeté</strong>."
+  }
+];
+
+const techFaq = [
+  {
+    q: "Comment fonctionne une chaudière à granulés automatique ?",
+    a: "Les granulés sont acheminés automatiquement du silo de stockage vers le brûleur de la chaudière via une vis sans fin motorisée ou par aspiration pneumatique. Une bougie d'allumage électrique allume le combustible. Une régulation électronique intelligente ajuste en continu l'arrivée d'air et de pellets pour maintenir la consigne de température de manière optimale."
+  },
+  {
+    q: "Quelle puissance (en kW) choisir pour une maison de 100 à 150 m² ?",
+    a: "Pour une maison individuelle isolée de façon standard, la puissance nécessaire se situe généralement entre <strong>12 kW et 20 kW</strong>. Il est capital de faire réaliser un bilan thermique précis pour éviter le surdimensionnement : une chaudière trop puissante s'éteindra et s'allumera trop souvent (cycles courts), ce qui surconsomme du combustible et fatigue les pièces mécaniques prématurément."
+  },
+  {
+    q: "Pourquoi l'installation d'un ballon tampon est-elle fortement conseillée ?",
+    a: "Le ballon tampon stocke le surplus d'eau chaude produit par la chaudière biomasse. Il permet à la chaudière de fonctionner à son régime de rendement maximal sans interruption incessante. Il réduit considérablement le nombre d'allumages électriques quotidiens, préservant ainsi l'allumeur de la chaudière et optimisant la consommation globale de bois."
+  },
+  {
+    q: "La chaudière à granulés à condensation est-elle rentable pour toutes les maisons ?",
+    a: "Non. La condensation n'est efficace que si l'eau de retour du circuit est froide (inférieure à 45°C). Elle requiert donc impérativement des émetteurs basse température comme un <strong>plancher chauffant hydraulique</strong> ou des <strong>radiateurs chaleur douce</strong>. Si votre logement possède de vieux radiateurs en fonte haute température, une chaudière standard modulante sera beaucoup plus économique et adaptée."
+  }
+];
+
+const storageFaq = [
+  {
+    q: "Quelle différence entre alimentation par vis sans fin et par aspiration pneumatique ?",
+    a: "La vis sans fin utilise une vis sans fin physique en acier pour déplacer les pellets sur une distance courte et en ligne droite (moins de 6 mètres). C'est la solution la plus simple et la plus économique. L'aspiration pneumatique utilise une turbine à air qui aspire les granulés via deux flexibles souples. Elle permet d'éloigner le silo de stockage jusqu'à 20 mètres de la chaudière et de franchir des angles ou des cloisons."
+  },
+  {
+    q: "Quel espace physique faut-il allouer au silo de stockage ?",
+    a: "Pour stocker la consommation d'une année de chauffage complète (environ 3 à 5 tonnes de pellets), prévoyez un espace au sol utile de <strong>2 à 4 m²</strong> avec une hauteur sous plafond minimale de <strong>2 mètres</strong> pour loger un silo textile en kit ou aménager une pièce de réserve maçonnée."
+  },
+  {
+    q: "Comment se déroule la livraison de granulés de bois en vrac ?",
+    a: "Un camion citerne équipé d'un système de soufflage se déplace à votre domicile. Le chauffeur branche deux tuyaux flexibles sur les raccords extérieurs (raccords pompiers Guillemin de diamètre 100) connectés à votre silo. Le camion souffle les pellets sous faible pression tout en aspirant les poussières de bois volatiles créées lors de la livraison."
+  },
+  {
+    q: "Peut-on stocker des pellets dans un sous-sol humide ou en extérieur ?",
+    a: "Non ! L'humidité est l'ennemi juré du granulé de bois. Le pellet absorbe l'eau, gonfle, perd son pouvoir calorifique et se désagrège sous forme de sciure compacte, risquant de bloquer irrémédiablement vos systèmes de transfert motorisés. Le silo (qu'il soit en tissu, maçonné ou cuve enterrée) doit être implanté dans un local parfaitement ventilé et sec."
+  }
+];
+
+const allFaq = [...budgetFaq, ...aidsFaq, ...techFaq, ...storageFaq];
+
 const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": siteConfig.faq.map(f => ({
+    "mainEntity": allFaq.map(f => ({
       "@type": "Question",
       "name": f.q,
       "acceptedAnswer": { "@type": "Answer", "text": f.a }
@@ -18,8 +96,8 @@ const jsonLd = [
 ---
 
 <BaseLayout
-  title={`FAQ Chaudière Granulés : Prix, Fonctionnement & Aides 2026 | ${siteConfig.name}`}
-  description={`Toutes les réponses à vos questions sur le prix, l'installation, les aides de l'État et l'entretien annuel d'une chaudière à granulés de bois.`}
+  title={`FAQ Chaudière Granulés 2026 : Prix, Fonctionnement & Aides | ${siteConfig.name}`}
+  description={`Toutes les réponses d'experts à vos questions sur le prix d'achat, l'installation, les aides de l'Anah et le stockage de la chaudière à granulés de bois.`}
   canonical="/faq"
   jsonLd={jsonLd}
 >
@@ -31,18 +109,43 @@ const jsonLd = [
       <h1 class="text-3xl md:text-5xl font-extrabold mb-4 font-heading mt-6">
         ❓ Foire Aux Questions (FAQ)
       </h1>
-      <p class="text-amber-200 text-lg max-w-2xl">
-        Une question technique, administrative ou sur le budget ? Retrouvez les réponses exhaustives de nos experts chauffagistes.
+      <p class="text-amber-200 text-lg max-w-2xl font-medium">
+        Une question technique, administrative ou sur le budget ? Retrouvez les réponses exhaustives et certifiées de nos chauffagistes experts.
       </p>
     </div>
   </section>
 
   <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="bg-white rounded-2xl border border-amber-200 p-6 md:p-10 shadow-sm">
-      <h2 class="text-2xl font-bold text-brand-800 mb-6 font-heading text-center">
-        💡 Questions fréquentes sur le chauffage aux pellets
-      </h2>
-      <FAQ items={siteConfig.faq} />
+    <div class="bg-white rounded-2xl border border-amber-200 p-6 md:p-10 shadow-sm space-y-10">
+      
+      <div>
+        <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading border-b border-amber-100 pb-2 flex items-center gap-2">
+          <span>💰</span> Budget, Prix et Rentabilité
+        </h2>
+        <FAQ items={budgetFaq} />
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading border-b border-amber-100 pb-2 flex items-center gap-2">
+          <span>🏛️</span> Aides Financières & Réglementation
+        </h2>
+        <FAQ items={aidsFaq} />
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading border-b border-amber-100 pb-2 flex items-center gap-2">
+          <span>⚙️</span> Fonctionnement Technique & Dimensionnement
+        </h2>
+        <FAQ items={techFaq} />
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading border-b border-amber-100 pb-2 flex items-center gap-2">
+          <span>📦</span> Silos de Stockage & Logistique
+        </h2>
+        <FAQ items={storageFaq} />
+      </div>
+
     </div>
 
     <!-- Final CTA card -->
