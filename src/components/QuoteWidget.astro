@@ -22,7 +22,7 @@ const { keyword = siteConfig.niche.name } = Astro.props;
   <!-- ViteUnDevis Widget Container -->
   <div class="p-6 bg-amber-50/30">
     <div id="ve838806958d" class="vud-widget-container min-h-[420px]">
-      <div class="flex flex-col items-center justify-center py-12 text-brand-700/60 text-sm">
+      <div class="vud-loader flex flex-col items-center justify-center py-12 text-brand-700/60 text-sm">
         <!-- Loader -->
         <svg class="animate-spin h-8 w-8 text-accent-500 mb-3" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -40,6 +40,21 @@ const { keyword = siteConfig.niche.name } = Astro.props;
       vud_js.src = '//www.viteundevis.com/e838806958/'+vud_partenaire_id+'/'+vud_categorie_id+'/';
       var s = document.getElementsByTagName('script')[0];
       s.parentNode.insertBefore(vud_js, s);
+
+      // Hide and remove loader when the form container is appended
+      const container = document.getElementById('ve838806958d');
+      if (container) {
+        const observer = new MutationObserver((mutations) => {
+          if (document.getElementById('vud_mb_js_box')) {
+            const loader = container.querySelector('.vud-loader');
+            if (loader) {
+              loader.remove();
+            }
+            observer.disconnect();
+          }
+        });
+        observer.observe(container, { childList: true, subtree: true });
+      }
     </script>
   </div>
 
@@ -50,3 +65,9 @@ const { keyword = siteConfig.niche.name } = Astro.props;
     <span class="flex items-center gap-1">🌿 Éco-responsable</span>
   </div>
 </div>
+
+<style>
+  #ve838806958d:has(#vud_mb_js_box) .vud-loader {
+    display: none !important;
+  }
+</style>
