@@ -55,6 +55,7 @@ h1, h2, h3, h4, h5, h6,
 /* === HERO GRADIENT — Brun-doré avec overlay === */
 .gradient-hero {
   background: linear-gradient(135deg, rgba(120, 53, 15, 0.92) 0%, rgba(180, 83, 9, 0.85) 50%, rgba(146, 64, 14, 0.78) 100%);
+  padding-top: 5.5rem !important; /* Spacing for the transparent navbar */
 }
 
 .gradient-hero-image {
@@ -62,6 +63,7 @@ h1, h2, h3, h4, h5, h6,
   background-size: cover;
   background-position: center;
   position: relative;
+  padding-top: 6.5rem !important; /* Extra spacing for the homepage hero */
 }
 .gradient-hero-image::before {
   content: '';
