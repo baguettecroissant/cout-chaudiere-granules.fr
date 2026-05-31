@@ -2,86 +2,202 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { siteConfig } from '../../../site.config';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import FAQ from '../../components/FAQ.astro';
 
 const budgetFaq = [
   {
+    id: "b1",
+    cat: "budget",
     q: "Quel est le prix moyen d'une chaudière à granulés en 2026, pose comprise ?",
-    a: "Le tarif complet varie généralement entre <strong>8 000 € et 22 000 € TTC pose comprise</strong> en 2026. Cette fourchette dépend essentiellement de la puissance requise (ex. : 12 à 25 kW), du niveau d'automatisation (trémie manuelle vs aspiration pneumatique) et du choix du silo. Pour une chaudière standard à vis sans fin avec silo en kit de taille moyenne, comptez environ <strong>11 000 € à 14 000 € TTC posée</strong> avant déduction des aides."
+    a: "Le tarif complet varie généralement entre <strong>8 000 € et 22 000 € TTC pose comprise</strong> en 2026. Cette large fourchette s'explique par plusieurs facteurs techniques : la puissance requise pour chauffer le logement (ex. de 12 à 25 kW), le type d'alimentation (alimentation manuelle par trémie plus abordable vs chargement 100 % automatique par vis sans fin ou aspiration pneumatique), et la capacité du silo de stockage. Pour un modèle standard automatique avec silo textile de taille moyenne (convenant à une maison de 120 m²), le budget se situe généralement entre <strong>11 000 € et 14 000 € TTC installé</strong> avant déduction des aides financières publiques."
   },
   {
-    q: "Quelle est la durée d'amortissement de ce type d'installation ?",
-    a: "Le temps de retour sur investissement moyen est estimé entre <strong>4 et 7 ans</strong>. Il est particulièrement court (4 à 5 ans) si vous remplacez un chauffage au fioul domestique ou des convecteurs électriques énergivores. Les économies de combustible annuelles générées, combinées aux aides initiales massives (MaPrimeRénov' et CEE), permettent d'amortir le reste à charge très rapidement."
+    id: "b2",
+    cat: "budget",
+    q: "Quelle est la durée d'amortissement réelle de ce type de chauffage ?",
+    a: "Le temps de retour sur investissement moyen est estimé entre <strong>4 et 7 ans</strong>. Il s'avère particulièrement court (souvent moins de 5 ans) si vous remplacez un chauffage au fioul domestique ou de vieux convecteurs électriques énergivores. Les économies annuelles substantielles sur la facture de combustible (de l'ordre de 50 % à 70 % selon l'énergie précédente) alliées aux aides à l'installation massives (MaPrimeRénov' de l'Anah et primes CEE) permettent de réduire drastiquement le reste à charge et d'amortir l'investissement de départ à vitesse grand V."
   },
   {
+    id: "b3",
+    cat: "budget",
     q: "Le prix des granulés de bois (pellets) est-il stable face à l'électricité ou au gaz ?",
-    a: "Oui, très stable. Après une période de forte spéculation en 2022-2023, le marché du granulé de bois s'est solidement restructuré en France grâce à la création de nouvelles usines de production sur le territoire national. En 2026, le prix s'est stabilisé entre <strong>300 € et 420 € la tonne en vrac</strong> (livrée). Le pellet reste le combustible de chauffage central le moins cher et le plus stable du marché."
+    a: "Oui, la stabilité est l'un des plus grands atouts du granulé de bois. Après les perturbations temporaires dues à la crise énergétique mondiale de 2022-2023, le marché français s'est solidement restructuré. Grâce à la création de multiples usines de granulation sur le territoire national, la filière française produit désormais plus de 95 % des pellets consommés localement. En 2026, le prix se stabilise durablement entre <strong>300 € et 420 € la tonne en vrac</strong> (livrée par camion). À pouvoir calorifique équivalent, le pellet s'impose comme l'énergie de chauffage central la moins chère et la plus décorrélée des tensions géopolitiques."
   },
   {
-    q: "Combien coûte l'entretien annuel obligatoire ?",
-    a: "Le coût d'un entretien annuel complet varie de <strong>150 € à 350 €</strong>. Ce tarif englobe généralement la visite technique de nettoyage et de contrôle de la chaudière (obligatoire une fois par an) ainsi que les <strong>deux ramonages mécaniques obligatoires</strong> de votre conduit de fumée (dont un réalisé en période d'activité de chauffe)."
+    id: "b4",
+    cat: "budget",
+    q: "Combien coûte l'entretien annuel obligatoire et le ramonage ?",
+    a: "Le coût annuel moyen oscille entre <strong>150 € et 350 € TTC</strong>. Ce budget englobe la visite technique obligatoire d'entretien de la chaudière (nettoyage complet du corps de chauffe, vérification des systèmes de sécurité et contrôle de la combustion) ainsi que les <strong>deux ramonages mécaniques du conduit de fumée imposés par la loi</strong> (dont l'un doit impérativement être effectué pendant la période de chauffe active). Opter pour un contrat d'entretien annuel chez un installateur RGE Qualibois agréé permet souvent d'obtenir des dépannages rapides inclus à tarif préférentiel."
+  },
+  {
+    id: "b5",
+    cat: "budget",
+    q: "Quel est le prix à la tonne des pellets en sac vs en vrac ?",
+    a: "Le tarif à la tonne dépend du conditionnement et de la logistique : <ul><li><strong>En vrac (livraison par camion souffleur)</strong> : le prix oscille entre <strong>300 € et 420 € la tonne</strong> pour une livraison minimale de 2 à 3 tonnes. C'est l'option la plus économique et confortable si vous avez un silo de stockage automatique.</li><li><strong>En sacs (sur palette)</strong> : le prix moyen d'une palette de 66 ou 72 sacs de 15 kg (environ 1 tonne) se situe entre <strong>380 € et 490 €</strong> selon la marque et le distributeur. C'est la solution adaptée aux chaudières à trémie manuelle ou si vous manquez d'espace de stockage en vrac.</li></ul>"
+  },
+  {
+    id: "b6",
+    cat: "budget",
+    q: "Combien économise-t-on réellement par an par rapport au fioul ou au gaz ?",
+    a: "Pour une maison individuelle de 120 m² moyennement isolée (consommation annuelle estimée à ~18 000 kWh thermiques), les économies de combustible annuelles sont considérables : <ul><li><strong>Par rapport au fioul domestique</strong> : vous économisez entre <strong>1 200 € et 2 200 € par an</strong>, le fioul étant un dérivé du pétrole soumis à de lourdes taxes carbone.</li><li><strong>Par rapport au gaz propane (en citerne)</strong> : les économies s'élèvent à près de <strong>1 500 € à 2 500 € par an</strong>.</li><li><strong>Par rapport au gaz naturel (de ville)</strong> : vous réalisez de <strong>600 € à 1 200 € d'économies annuelles</strong> selon l'évolution des tarifs réglementés.</li></ul>"
   }
 ];
 
 const aidsFaq = [
   {
+    id: "a1",
+    cat: "aids",
     q: "Quelles sont les aides cumulables en 2026 pour l'achat d'une chaudière biomasse ?",
-    a: "Vous pouvez cumuler jusqu'à 5 aides majeures pour financer vos travaux : <strong>MaPrimeRénov'</strong> (jusqu'à 10 000 €), la <strong>Prime Énergie CEE / Coup de pouce</strong> (2 500 € à 4 500 €), le <strong>Bonus Sortie de Fioul de 1 000 €</strong> (si remplacement d'une cuve fioul), une <strong>TVA réduite à 5,5 %</strong> appliquée directement sur la facture, et l'<strong>Éco-PTZ</strong> (prêt à taux 0 % jusqu'à 30 000 € sur 15 ans) pour financer le reste à charge."
+    a: "Pour encourager la transition écologique, vous pouvez cumuler jusqu'à 5 dispositifs majeurs en 2026 : <ol><li><strong>MaPrimeRénov' de l'Anah</strong> : jusqu'à 10 000 € pour les ménages aux revenus très modestes.</li><li><strong>La Prime Énergie CEE (Certificats d'Économie d'Énergie)</strong> : d'une valeur de 2 500 € à 4 500 € selon votre niveau de ressources.</li><li><strong>Le Bonus Sortie de Fioul</strong> : une aide forfaitaire supplémentaire de 1 000 € si vous procédez au démontage et à la neutralisation de votre ancienne cuve à fioul.</li><li><strong>La TVA à taux super-réduit de 5,5 %</strong> : appliquée directement par votre installateur sur le matériel et la main d'œuvre.</li><li><strong>L'Éco-Prêt à Taux Zéro (Éco-PTZ)</strong> : un financement sans intérêts jusqu'à 30 000 € remboursable sur 15 ans pour couvrir votre reste à charge.</li></ol>"
   },
   {
+    id: "a2",
+    cat: "aids",
     q: "La certification RGE Qualibois de l'installateur est-elle obligatoire ?",
-    a: "Oui, elle est <strong>strictement obligatoire</strong> pour pouvoir prétendre à la moindre aide publique ou privée (Anah, CEE, PTZ). L'artisan doit posséder la qualification <strong>RGE Qualibois module Eau</strong> active le jour de la signature de votre devis. Refusez toute signature si le certificat RGE de l'entreprise n'est pas fourni à jour."
+    a: "Oui, elle est **strictement obligatoire et non négociable**. Pour prétendre à la moindre aide d'État (MaPrimeRénov'), aux primes CEE ou à l'Éco-PTZ, votre projet doit être intégralement réalisé par un professionnel certifié **RGE (Reconnu Garant de l'Environnement) Qualibois module Eau** (chauffage central biomasse). Assurez-vous d'exiger une copie du certificat RGE à jour lors de la signature du devis et vérifiez que sa période de validité couvre bien le moment des travaux."
   },
   {
-    q: "Peut-on obtenir des aides de l'Anah si l'on est propriétaire bailleur ?",
-    a: "Oui, les propriétaires bailleurs sont pleinement éligibles à MaPrimeRénov' pour des logements loués en tant résidence principale (dans la limite de 3 logements par bailleur sur 5 ans). En revanche, les résidences secondaires ne sont pas éligibles aux aides directes de l'Anah (mais peuvent prétendre aux primes CEE)."
+    id: "a3",
+    cat: "aids",
+    q: "Les propriétaires bailleurs et résidences secondaires sont-ils éligibles aux aides ?",
+    a: "Les **propriétaires bailleurs sont pleinement éligibles** à MaPrimeRénov' en 2026 (dans la limite de 3 logements mis en location comme résidence principale sur une période de 5 ans) afin d'éradiquer les passoires thermiques locatives. En revanche, les **résidences secondaires ne sont pas éligibles** aux subventions de l'Anah (MaPrimeRénov'), mais elles restent pleinement éligibles aux primes CEE (primes énergie du privé) et à la TVA réduite à 5,5 %."
   },
   {
-    q: "Comment monter un dossier de demande d'aides sans risquer un rejet ?",
-    a: "La règle d'or absolue est de <strong>créer vos comptes en ligne et de déposer votre dossier d'aides AVANT de signer le devis</strong> ou de verser un acompte à l'artisan. Tout dossier dont le devis est signé ou daté antérieurement à la demande sur les portails officiels de l'Anah ou du signataire CEE sera <strong>définitivement rejeté</strong>."
+    id: "a4",
+    cat: "aids",
+    q: "Comment monter son dossier d'aides sans risquer un rejet administratif ?",
+    a: "La règle d'or absolue pour éviter tout rejet est la suivante : **vous devez impérativement créer vos comptes en ligne et déposer vos demandes d'aides (portail MaPrimeRénov' et CEE) AVANT de signer le moindre devis** ou de verser le moindre acompte financier à votre artisan. Tout devis signé ou daté (même d'un seul jour) avant le dépôt officiel de votre demande d'aide entraînera le rejet irréversible de votre dossier par l'administration."
+  },
+  {
+    id: "a5",
+    cat: "aids",
+    q: "Quelle est la TVA applicable pour l'installation d'une chaudière à granulés ?",
+    a: "Les travaux de rénovation énergétique axés sur les énergies renouvelables bénéficient d'un taux de **TVA très avantageux à 5,5 %** (au lieu du taux standard de 20 %). Ce taux réduit s'applique automatiquement sur la facture émise par l'entreprise RGE, et couvre à la fois l'achat de la chaudière biomasse, le silo, le raccordement hydraulique, le ballon tampon, le tubage de cheminée et la main-d'œuvre associée."
+  },
+  {
+    id: "a6",
+    cat: "aids",
+    q: "Existe-t-il des aides locales régionales ou départementales supplémentaires ?",
+    a: "Oui, de nombreuses collectivités locales (Régions, Départements, Métropoles ou Communes) proposent des aides financières spécifiques pour inciter les foyers à abandonner les énergies fossiles. Par exemple, la région Auvergne-Rhône-Alpes, le Grand Est ou l'Occitanie disposent de dispositifs d'accompagnement cumulables avec MaPrimeRénov'. Rapprochez-vous d'un conseiller France Rénov' de votre secteur pour réaliser un plan de financement exhaustif."
   }
 ];
 
 const techFaq = [
   {
-    q: "Comment fonctionne une chaudière à granulés automatique ?",
-    a: "Les granulés sont acheminés automatiquement du silo de stockage vers le brûleur de la chaudière via une vis sans fin motorisée ou par aspiration pneumatique. Une bougie d'allumage électrique allume le combustible. Une régulation électronique intelligente ajuste en continu l'arrivée d'air et de pellets pour maintenir la consigne de température de manière optimale."
+    id: "t1",
+    cat: "tech",
+    q: "Comment fonctionne exactement le système d'alimentation automatique ?",
+    a: "Les chaudières automatiques transportent le granulé du silo vers le brûleur de manière autonome via deux grands procédés : <ul><li><strong>La vis sans fin physique (vis d'Archimède)</strong> : un moteur fait tourner une spirale en acier dans un tube rigide, déplaçant mécaniquement les pellets. C'est simple, très fiable et peu coûteux, mais cela impose que le silo soit collé à la chaudière (distance max < 6 mètres, en ligne droite).</li><li><strong>L'aspiration pneumatique</strong> : une turbine d'aspiration crée une dépression et aspire les granulés via deux tuyaux flexibles souples. Ce système permet d'éloigner le silo jusqu'à 20 mètres de la chaudière, de franchir des angles à 90° ou de passer à travers des cloisons et des étages.</li></ul>"
   },
   {
-    q: "Quelle puissance (en kW) choisir pour une maison de 100 à 150 m² ?",
-    a: "Pour une maison individuelle isolée de façon standard, la puissance nécessaire se situe généralement entre <strong>12 kW et 20 kW</strong>. Il est capital de faire réaliser un bilan thermique précis pour éviter le surdimensionnement : une chaudière trop puissante s'éteindra et s'allumera trop souvent (cycles courts), ce qui surconsomme du combustible et fatigue les pièces mécaniques prématurément."
+    id: "t2",
+    cat: "tech",
+    q: "Quelle puissance de chaudière (en kW) choisir pour une maison de 100 à 150 m² ?",
+    a: "Pour une maison individuelle de 100 à 150 m² moyennement isolée en France métropolitaine, la puissance thermique requise se situe en général entre **12 kW et 20 kW**. Il est extrêmement important de faire réaliser un bilan thermique (ou dimensionnement précis) par un professionnel certifié RGE Qualibois. **Évitez à tout prix le surdimensionnement** : une chaudière trop puissante par rapport aux besoins réels fonctionnera par à-coups (cycles courts d'allumage), ce qui augmente la consommation de pellets, sollicite excessivement la bougie d'allumage et écourte la durée de vie du matériel."
   },
   {
-    q: "Pourquoi l'installation d'un ballon tampon est-elle fortement conseillée ?",
-    a: "Le ballon tampon stocke le surplus d'eau chaude produit par la chaudière biomasse. Il permet à la chaudière de fonctionner à son régime de rendement maximal sans interruption incessante. Il réduit considérablement le nombre d'allumages électriques quotidiens, préservant ainsi l'allumeur de la chaudière et optimisant la consommation globale de bois."
+    id: "t3",
+    cat: "tech",
+    q: "Pourquoi l'installation d'un ballon tampon est-elle indispensable ?",
+    a: "Le ballon tampon agit comme une réserve d'eau chaude technique intermédiaire. Il stocke l'énergie thermique produite en excès par la chaudière et la redistribue progressivement dans vos radiateurs ou votre plancher chauffant. Son rôle est capital car il évite à la chaudière de s'allumer et de s'éteindre de manière répétée (phénomène destructeur de cycles courts). Grâce au ballon tampon, la chaudière tourne à son régime optimal à plein rendement, ce qui permet d'économiser jusqu'à 15 % de pellets et de préserver les composants électriques (bougie d'allumage)."
   },
   {
-    q: "La chaudière à granulés à condensation est-elle rentable pour toutes les maisons ?",
-    a: "Non. La condensation n'est efficace que si l'eau de retour du circuit est froide (inférieure à 45°C). Elle requiert donc impérativement des émetteurs basse température comme un <strong>plancher chauffant hydraulique</strong> ou des <strong>radiateurs chaleur douce</strong>. Si votre logement possède de vieux radiateurs en fonte haute température, une chaudière standard modulante sera beaucoup plus économique et adaptée."
+    id: "t4",
+    cat: "tech",
+    q: "La chaudière à granulés à condensation est-elle rentable pour tous les logements ?",
+    a: "Non. Une chaudière à condensation récupère l'énergie thermique latente contenue dans les vapeurs d'eau des fumées de combustion. Pour que ce phénomène physique fonctionne (point de rosée), l'eau de retour du circuit de chauffage doit être froide (inférieure à 45°C). Elle est donc **hautement recommandée et rentable si votre logement est équipé d'émetteurs basse température** (plancher chauffant hydraulique ou radiateurs à eau basse température). Si vous disposez de vieux radiateurs en fonte haute température, la condensation ne se fera jamais : une chaudière modulante classique sera alors bien plus adaptée et économique à l'achat."
+  },
+  {
+    id: "t5",
+    cat: "tech",
+    q: "Une chaudière à granulés peut-elle aussi produire l'eau chaude sanitaire (ECS) ?",
+    a: "Oui, tout à fait. Les chaudières à pellets modernes gèrent parfaitement la production d'eau chaude sanitaire pour toute la famille. Elles peuvent être connectées à un ballon d'eau chaude intégré ou déporté (ballon bi-énergie, préparateur ECS ou ballon thermodynamique). La régulation intelligente de la chaudière donne systématiquement la priorité à la production d'eau chaude sanitaire pour vous garantir un confort thermique ininterrompu toute l'année, même en été (où la chaudière ne s'allume que brièvement pour chauffer l'eau du ballon)."
+  },
+  {
+    id: "t6",
+    cat: "tech",
+    q: "Que se passe-t-il en cas de coupure d'électricité ?",
+    a: "Comme n'importe quelle chaudière moderne à combustion régulée (au gaz ou au fioul) ou comme une pompe à chaleur, la chaudière à granulés **a besoin d'alimentation électrique pour fonctionner**. L'électricité alimente la régulation électronique de bord, le moteur d'amenée des granulés (vis sans fin), la turbine d'extraction des fumées, la bougie d'allumage et les circulateurs d'eau du réseau de chauffage. En cas de panne de courant, la chaudière s'éteint immédiatement en toute sécurité par étouffement progressif du foyer de combustion. Il est possible d'installer un petit onduleur de sauvegarde si votre zone géographique subit régulièrement des coupures de courant."
   }
 ];
 
 const storageFaq = [
   {
-    q: "Quelle différence entre alimentation par vis sans fin et par aspiration pneumatique ?",
-    a: "La vis sans fin utilise une vis sans fin physique en acier pour déplacer les pellets sur une distance courte et en ligne droite (moins de 6 mètres). C'est la solution la plus simple et la plus économique. L'aspiration pneumatique utilise une turbine à air qui aspire les granulés via deux flexibles souples. Elle permet d'éloigner le silo de stockage jusqu'à 20 mètres de la chaudière et de franchir des angles ou des cloisons."
+    id: "s1",
+    cat: "storage",
+    q: "Quel type de silo choisir : textile, maçonné ou enterré ?",
+    a: "Le choix du silo dépend de votre budget et de la configuration de votre habitation : <ul><li><strong>Silo textile en kit (recommandé)</strong> : suspendu sur une structure métallique ou en bois, il est étanche à la poussière, protège parfaitement de l'humidité ambiante et s'installe très rapidement dans un garage ou une cave. C'est le meilleur rapport qualité/prix.</li><li><strong>Silo maçonné ou autoconstruit (sur mesure)</strong> : il s'agit d'aménager une pièce étanche existante en créant des pentes à 35°-40° en bois (panneaux OSB) pour guider les granulés vers la vis d'extraction. Cela permet d'optimiser chaque centimètre cube disponible.</li><li><strong>Cuve enterrée (extérieur)</strong> : en plastique ou en béton, elle libère totalement l'espace intérieur de la maison, mais requiert des travaux de terrassement importants et un surcoût conséquent.</li></ul>"
   },
   {
-    q: "Quel espace physique faut-il allouer au silo de stockage ?",
-    a: "Pour stocker la consommation d'une année de chauffage complète (environ 3 à 5 tonnes de pellets), prévoyez un espace au sol utile de <strong>2 à 4 m²</strong> avec une hauteur sous plafond minimale de <strong>2 mètres</strong> pour loger un silo textile en kit ou aménager une pièce de réserve maçonnée."
+    id: "s2",
+    cat: "storage",
+    q: "Combien d'espace physique faut-il prévoir pour stocker ses pellets ?",
+    a: "Pour stocker la consommation annuelle moyenne d'une maison standard (environ 3 à 5 tonnes de granulés en vrac), vous devez allouer un espace au sol de **2 à 4 m²**, avec une hauteur sous plafond minimale de **2 mètres** pour loger un silo textile de taille adéquate ou créer un espace maçonné fonctionnel. Il est impératif que ce local technique soit situé à portée du tuyau de livraison du camion souffleur (généralement moins de 20 mètres)."
   },
   {
-    q: "Comment se déroule la livraison de granulés de bois en vrac ?",
-    a: "Un camion citerne équipé d'un système de soufflage se déplace à votre domicile. Le chauffeur branche deux tuyaux flexibles sur les raccords extérieurs (raccords pompiers Guillemin de diamètre 100) connectés à votre silo. Le camion souffle les pellets sous faible pression tout en aspirant les poussières de bois volatiles créées lors de la livraison."
+    id: "s3",
+    cat: "storage",
+    q: "Comment se déroule la livraison de granulés en vrac par camion souffleur ?",
+    a: "Un camion citerne se déplace chez vous. Le livreur raccorde deux tuyaux flexibles à vos bouches d'alimentation extérieures (raccords pompiers Guillemin de diamètre 100). Le premier tuyau souffle les granulés de bois sous faible pression dans le silo, tandis que le second tuyau aspire les poussières fines générées lors du soufflage pour maintenir un espace propre. La livraison complète dure environ 30 à 45 minutes et s'effectue sans aucune manutention physique pour le propriétaire."
   },
   {
-    q: "Peut-on stocker des pellets dans un sous-sol humide ou en extérieur ?",
-    a: "Non ! L'humidité est l'ennemi juré du granulé de bois. Le pellet absorbe l'eau, gonfle, perd son pouvoir calorifique et se désagrège sous forme de sciure compacte, risquant de bloquer irrémédiablement vos systèmes de transfert motorisés. Le silo (qu'il soit en tissu, maçonné ou cuve enterrée) doit être implanté dans un local parfaitement ventilé et sec."
+    id: "s4",
+    cat: "storage",
+    q: "Les pellets craignent-ils l'humidité ? Comment bien les stocker ?",
+    a: "Oui, **l'humidité est l'ennemi juré absolue du pellet**. Fabriqué par forte compression de sciure sèche sans aucun liant chimique, le granulé de bois absorbe instantanément l'eau. Au contact de l'humidité, il gonfle, se désagrège sous forme de sciure compacte et perd tout son pouvoir calorifique. Surtout, la sciure humide risque de bloquer définitivement la vis sans fin de transfert ou d'obstruer le système d'aspiration de votre chaudière. Votre silo doit donc être installé dans un local technique parfaitement ventilé, hors d'eau et exempt de toute humidité résiduelle."
+  },
+  {
+    id: "s5",
+    cat: "storage",
+    q: "Quelle quantité de granulés de bois consomme-t-on en moyenne par an ?",
+    a: "Pour une maison individuelle classique de 120 m² habitée par 4 personnes et dotée d'une isolation moyenne (RT 2012 ou rénovée énergétiquement), la consommation annuelle moyenne de pellets oscille entre **2 et 4 tonnes** (pour le chauffage seul ou combiné avec la production d'eau chaude sanitaire). Cette consommation varie évidemment en fonction de la rigueur du climat de votre région, de la température de consigne intérieure (ex. 19°C vs 21°C) et de la qualité d'isolation globale du bâti."
   }
 ];
 
-const allFaq = [...budgetFaq, ...aidsFaq, ...techFaq, ...storageFaq];
+const brandFaq = [
+  {
+    id: "m1",
+    cat: "brand",
+    q: "Quelle est la durée de vie réelle d'une chaudière biomasse premium ?",
+    a: "Une chaudière à granulés de qualité industrielle, bien installée et régulièrement entretenue (visite annuelle + ramonage), possède une durée de vie moyenne comprise entre **20 et 25 ans**. C'est une longévité équivalente voire supérieure à celle d'une chaudière fioul traditionnelle de l'ancienne génération, et nettement supérieure à celle d'une pompe à chaleur air-eau dont la durée de vie moyenne dépasse rarement 12 à 15 ans en raison de la fatigue rapide du compresseur thermodynamique."
+  },
+  {
+    id: "m2",
+    cat: "brand",
+    q: "Quelles sont les meilleures marques de chaudières à granulés en 2026 ?",
+    a: "Le marché haut de gamme est historiquement dominé par le savoir-faire autrichien et allemand. Les marques de référence incontournables incluent : <ul><li><strong>Ökofen</strong> : pionnier mondial de la chaudière biomasse, réputé pour sa technologie de pointe à condensation Pellematic.</li><li><strong>Hargassner</strong> : le summum de la robustesse mécanique et de la fiabilité électronique avec ses gammes Nano.</li><li><strong>Fröling</strong> : expert industriel allemand proposant d'excellents modèles à haut rendement (PE1, PE1 Condens).</li><li><strong>Viessmann & Windhager</strong> : constructeurs allemands haut de gamme réputés pour la compacité et la finition irréprochable de leurs appareils.</li><li><strong>Easypell</strong> : la marque alternative d'entrée/milieu de gamme sous licence technologique Ökofen, idéale pour un budget maîtrisé sans compromis sur la robustesse.</li></ul>"
+  },
+  {
+    id: "m3",
+    cat: "brand",
+    q: "Comment choisir la certification des granulés (DINplus, ENplus A1, NF) ?",
+    a: "Pour préserver le corps de chauffe de votre chaudière et optimiser son rendement, vous devez **impérativement acheter des granulés certifiés de qualité premium**. Privilégiez les trois certifications officielles suivantes qui garantissent un cahier des charges strict (taux d'humidité inférieur à 10 %, taux de cendres inférieur à 0,7 %, absence totale d'additifs chimiques, et longueur calibrée) : <ul><li><strong>DINplus</strong> (norme allemande d'origine, référence historique du marché).</li><li><strong>ENplus A1</strong> (norme européenne harmonisée, garantissant également le respect de la qualité lors du transport).</li><li><strong>NF Biomasse - Granulés biocombustibles</strong> (la certification officielle française).</li></ul>"
+  },
+  {
+    id: "m4",
+    cat: "brand",
+    q: "À quelle fréquence faut-il vider le bac à cendres de la chaudière ?",
+    a: "Grâce à des taux de combustion extrêmement performants (rendements supérieurs à 90-95 %), la quantité de cendres produite par le bois comprimé est minime. Sur les chaudières modernes équipées d'un système de compactage des cendres automatique vers un bac externe, vous n'aurez à vider le tiroir à cendres que **1 à 3 fois par saison de chauffe** seulement. Cette opération est très propre, prend moins de deux minutes et s'effectue facilement. De plus, les cendres de bois naturelles froides constituent un excellent engrais riche en potasse pour votre jardin ou potager !"
+  },
+  {
+    id: "m5",
+    cat: "brand",
+    q: "Quelles sont les pannes les plus fréquentes et comment les éviter ?",
+    a: "La très grande majorité des pannes sur une chaudière à granulés est liée à la qualité du combustible ou à un manque d'entretien basique : <ul><li><strong>Le blocage de la vis sans fin</strong> : provoqué par une accumulation excessive de poussière de bois (la \"fine\") au fond du silo. *Solution* : Vider et aspirer totalement le fond de votre silo de stockage tous les 2 ans avant la livraison.</li><li><strong>La formation de mâchefer sur le brûleur</strong> : dû à des pellets humides ou de piètre qualité qui fondent et bloquent l'arrivée d'air comburant. *Solution* : Utiliser exclusivement des pellets certifiés ENplus A1 ou DINplus.</li><li><strong>L'usure de la bougie ou résistance d'allumage</strong> : pièce d'usure standard soumise à de fortes contraintes thermiques lors des démarrages de combustion. *Solution* : Installer un ballon tampon pour réduire de 300 % le nombre d'allumages quotidiens requis.</li></ul>"
+  }
+];
 
+const faqCategories = [
+  { id: "all", name: "Toutes", icon: "📋" },
+  { id: "budget", name: "Prix & Rentabilité", icon: "💰" },
+  { id: "aids", name: "Aides & Finance", icon: "🏛️" },
+  { id: "tech", name: "Technique & Pose", icon: "⚙️" },
+  { id: "storage", name: "Stockage & Silos", icon: "📦" },
+  { id: "brand", name: "Entretien & Marques", icon: "🔧" }
+];
+
+const allFaq = [...budgetFaq, ...aidsFaq, ...techFaq, ...storageFaq, ...brandFaq];
+
+// FAQ JSON-LD formatting
 const jsonLd = [
   {
     "@context": "https://schema.org",
@@ -89,7 +205,10 @@ const jsonLd = [
     "mainEntity": allFaq.map(f => ({
       "@type": "Question",
       "name": f.q,
-      "acceptedAnswer": { "@type": "Answer", "text": f.a }
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.a.replace(/<\/?[^>]+(>|$)/g, "") // Clean HTML tags for JSON schema compliance
+      }
     }))
   }
 ];
@@ -101,64 +220,436 @@ const jsonLd = [
   canonical="/faq"
   jsonLd={jsonLd}
 >
-  <section class="gradient-hero text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Hero Section -->
+  <section class="gradient-hero text-white py-12 relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(251,191,36,0.1),transparent)] pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <Breadcrumbs items={[
         { label: "FAQ", href: "/faq" },
       ]} />
-      <h1 class="text-3xl md:text-5xl font-extrabold mb-4 font-heading mt-6">
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-4 font-heading mt-6 tracking-tight">
         ❓ Foire Aux Questions (FAQ)
       </h1>
-      <p class="text-amber-200 text-lg max-w-2xl font-medium">
+      <p class="text-amber-200 text-lg max-w-3xl font-medium leading-relaxed">
         Une question technique, administrative ou sur le budget ? Retrouvez les réponses exhaustives et certifiées de nos chauffagistes experts.
       </p>
     </div>
   </section>
 
-  <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="bg-white rounded-2xl border border-amber-200 p-6 md:p-10 shadow-sm space-y-10">
+  <!-- Interactive Controls Section -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
+    <div class="bg-white/90 backdrop-blur-md rounded-2xl border border-amber-200/60 p-6 shadow-xl space-y-6">
       
-      <div>
-        <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading border-b border-amber-100 pb-2 flex items-center gap-2">
-          <span>💰</span> Budget, Prix et Rentabilité
-        </h2>
-        <FAQ items={budgetFaq} />
+      <!-- Live Search Box -->
+      <div class="relative max-w-2xl mx-auto">
+        <label for="faq-search" class="sr-only">Rechercher une question</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-amber-600">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </span>
+          <input
+            type="search"
+            id="faq-search"
+            placeholder="Rechercher par mot-clé (ex: aides, Ökofen, ballon tampon, humidité...)"
+            class="block w-full pl-12 pr-10 py-4 bg-amber-50/30 border border-amber-200 text-brand-950 placeholder-amber-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 text-base shadow-sm transition-all"
+          />
+          <button 
+            type="button" 
+            id="search-clear" 
+            class="hidden absolute inset-y-0 right-0 pr-4 flex items-center text-amber-600 hover:text-amber-900 transition-colors"
+            aria-label="Effacer la recherche"
+          >
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <p id="search-status" class="mt-2 text-xs font-semibold text-green-700 text-center transition-opacity duration-200 h-4"></p>
       </div>
 
-      <div>
-        <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading border-b border-amber-100 pb-2 flex items-center gap-2">
-          <span>🏛️</span> Aides Financières & Réglementation
-        </h2>
-        <FAQ items={aidsFaq} />
+      <!-- Categories Pills Filter -->
+      <div class="border-t border-amber-100/70 pt-5">
+        <p class="text-xs font-bold text-amber-800 uppercase tracking-wider text-center mb-3">Filtrer par thématique</p>
+        <div class="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto" role="tablist">
+          {faqCategories.map(cat => {
+            const count = cat.id === 'all' ? allFaq.length : allFaq.filter(f => f.cat === cat.id).length;
+            return (
+              <button
+                type="button"
+                data-filter={cat.id}
+                role="tab"
+                aria-selected={cat.id === 'all' ? "true" : "false"}
+                class={`flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-bold rounded-full border transition-all duration-200 shadow-sm cursor-pointer select-none
+                  ${cat.id === 'all'
+                    ? 'bg-green-700 text-white border-green-700 ring-2 ring-green-700/20'
+                    : 'bg-white text-brand-850 border-amber-200 hover:bg-amber-50 hover:border-amber-300'
+                  }`}
+              >
+                <span>{cat.icon}</span>
+                <span>{cat.name}</span>
+                <span class={`text-[10px] px-1.5 py-0.5 rounded-full font-extrabold ${cat.id === 'all' ? 'bg-green-800 text-white' : 'bg-amber-100 text-amber-900'}`}>
+                  {count}
+                </span>
+              </button>
+            )
+          })}
+        </div>
       </div>
 
-      <div>
-        <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading border-b border-amber-100 pb-2 flex items-center gap-2">
-          <span>⚙️</span> Fonctionnement Technique & Dimensionnement
+    </div>
+  </section>
+
+  <!-- Accordions List Section -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div id="faq-container" class="space-y-12">
+      
+      <!-- Category 1 -->
+      <div class="faq-group-section" data-cat-section="budget">
+        <h2 class="text-xl md:text-2xl font-bold text-brand-900 mb-6 font-heading border-b border-amber-100 pb-2.5 flex items-center gap-3">
+          <span class="p-1.5 bg-amber-100 rounded-lg text-lg">💰</span> Budget, Prix et Rentabilité
         </h2>
-        <FAQ items={techFaq} />
+        <div class="space-y-4">
+          {budgetFaq.map(item => (
+            <details 
+              class="faq-card bg-white border border-amber-200 rounded-2xl overflow-hidden group shadow-sm transition-all duration-300 hover:border-amber-300/80 hover:shadow-md" 
+              data-item-cat={item.cat} 
+              id={item.id}
+            >
+              <summary class="flex justify-between items-center p-5 font-extrabold text-brand-800 text-sm md:text-base hover:bg-amber-50/40 transition-colors select-none cursor-pointer">
+                <span class="faq-question-text pr-4">{item.q}</span>
+                <svg class="w-5 h-5 text-brand-600 faq-chevron transform group-open:rotate-180 transition-transform duration-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div class="px-5 pb-5 pt-1 text-sm md:text-base text-brand-700 leading-relaxed border-t border-amber-100/50 bg-amber-50/10 prose max-w-none">
+                <div class="faq-answer-text" set:html={item.a} />
+              </div>
+            </details>
+          ))}
+        </div>
       </div>
 
-      <div>
-        <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading border-b border-amber-100 pb-2 flex items-center gap-2">
-          <span>📦</span> Silos de Stockage & Logistique
+      <!-- Category 2 -->
+      <div class="faq-group-section" data-cat-section="aids">
+        <h2 class="text-xl md:text-2xl font-bold text-brand-900 mb-6 font-heading border-b border-amber-100 pb-2.5 flex items-center gap-3">
+          <span class="p-1.5 bg-amber-100 rounded-lg text-lg">🏛️</span> Aides Financières & Réglementation
         </h2>
-        <FAQ items={storageFaq} />
+        <div class="space-y-4">
+          {aidsFaq.map(item => (
+            <details 
+              class="faq-card bg-white border border-amber-200 rounded-2xl overflow-hidden group shadow-sm transition-all duration-300 hover:border-amber-300/80 hover:shadow-md" 
+              data-item-cat={item.cat} 
+              id={item.id}
+            >
+              <summary class="flex justify-between items-center p-5 font-extrabold text-brand-800 text-sm md:text-base hover:bg-amber-50/40 transition-colors select-none cursor-pointer">
+                <span class="faq-question-text pr-4">{item.q}</span>
+                <svg class="w-5 h-5 text-brand-600 faq-chevron transform group-open:rotate-180 transition-transform duration-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div class="px-5 pb-5 pt-1 text-sm md:text-base text-brand-700 leading-relaxed border-t border-amber-100/50 bg-amber-50/10 prose max-w-none">
+                <div class="faq-answer-text" set:html={item.a} />
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      <!-- Category 3 -->
+      <div class="faq-group-section" data-cat-section="tech">
+        <h2 class="text-xl md:text-2xl font-bold text-brand-900 mb-6 font-heading border-b border-amber-100 pb-2.5 flex items-center gap-3">
+          <span class="p-1.5 bg-amber-100 rounded-lg text-lg">⚙️</span> Fonctionnement Technique & Dimensionnement
+        </h2>
+        <div class="space-y-4">
+          {techFaq.map(item => (
+            <details 
+              class="faq-card bg-white border border-amber-200 rounded-2xl overflow-hidden group shadow-sm transition-all duration-300 hover:border-amber-300/80 hover:shadow-md" 
+              data-item-cat={item.cat} 
+              id={item.id}
+            >
+              <summary class="flex justify-between items-center p-5 font-extrabold text-brand-800 text-sm md:text-base hover:bg-amber-50/40 transition-colors select-none cursor-pointer">
+                <span class="faq-question-text pr-4">{item.q}</span>
+                <svg class="w-5 h-5 text-brand-600 faq-chevron transform group-open:rotate-180 transition-transform duration-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div class="px-5 pb-5 pt-1 text-sm md:text-base text-brand-700 leading-relaxed border-t border-amber-100/50 bg-amber-50/10 prose max-w-none">
+                <div class="faq-answer-text" set:html={item.a} />
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      <!-- Category 4 -->
+      <div class="faq-group-section" data-cat-section="storage">
+        <h2 class="text-xl md:text-2xl font-bold text-brand-900 mb-6 font-heading border-b border-amber-100 pb-2.5 flex items-center gap-3">
+          <span class="p-1.5 bg-amber-100 rounded-lg text-lg">📦</span> Silos, Stockage & Logistique
+        </h2>
+        <div class="space-y-4">
+          {storageFaq.map(item => (
+            <details 
+              class="faq-card bg-white border border-amber-200 rounded-2xl overflow-hidden group shadow-sm transition-all duration-300 hover:border-amber-300/80 hover:shadow-md" 
+              data-item-cat={item.cat} 
+              id={item.id}
+            >
+              <summary class="flex justify-between items-center p-5 font-extrabold text-brand-800 text-sm md:text-base hover:bg-amber-50/40 transition-colors select-none cursor-pointer">
+                <span class="faq-question-text pr-4">{item.q}</span>
+                <svg class="w-5 h-5 text-brand-600 faq-chevron transform group-open:rotate-180 transition-transform duration-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div class="px-5 pb-5 pt-1 text-sm md:text-base text-brand-700 leading-relaxed border-t border-amber-100/50 bg-amber-50/10 prose max-w-none">
+                <div class="faq-answer-text" set:html={item.a} />
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      <!-- Category 5 -->
+      <div class="faq-group-section" data-cat-section="brand">
+        <h2 class="text-xl md:text-2xl font-bold text-brand-900 mb-6 font-heading border-b border-amber-100 pb-2.5 flex items-center gap-3">
+          <span class="p-1.5 bg-amber-100 rounded-lg text-lg">🔧</span> Entretien, Fiabilité & Choix des Marques
+        </h2>
+        <div class="space-y-4">
+          {brandFaq.map(item => (
+            <details 
+              class="faq-card bg-white border border-amber-200 rounded-2xl overflow-hidden group shadow-sm transition-all duration-300 hover:border-amber-300/80 hover:shadow-md" 
+              data-item-cat={item.cat} 
+              id={item.id}
+            >
+              <summary class="flex justify-between items-center p-5 font-extrabold text-brand-800 text-sm md:text-base hover:bg-amber-50/40 transition-colors select-none cursor-pointer">
+                <span class="faq-question-text pr-4">{item.q}</span>
+                <svg class="w-5 h-5 text-brand-600 faq-chevron transform group-open:rotate-180 transition-transform duration-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div class="px-5 pb-5 pt-1 text-sm md:text-base text-brand-700 leading-relaxed border-t border-amber-100/50 bg-amber-50/10 prose max-w-none">
+                <div class="faq-answer-text" set:html={item.a} />
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      <!-- No Results State -->
+      <div id="faq-empty-state" class="hidden text-center py-12 px-4 bg-amber-50/30 rounded-2xl border border-amber-200/50">
+        <span class="text-5xl">🔍</span>
+        <h3 class="text-lg font-bold text-brand-900 mt-4 mb-2">Aucun résultat trouvé</h3>
+        <p class="text-brand-700/80 text-sm max-w-md mx-auto">
+          Nous n'avons pas trouvé de réponse pour "<span id="search-query-highlight" class="font-bold text-green-700"></span>". Essayez de formuler votre recherche différemment (ex. "aides", "Ökofen", "silo").
+        </p>
+        <button 
+          type="button" 
+          id="faq-reset-btn"
+          class="mt-5 inline-flex items-center gap-2 bg-green-700 text-white font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-green-800 transition-colors shadow-sm cursor-pointer"
+        >
+          Réinitialiser la recherche
+        </button>
       </div>
 
     </div>
 
     <!-- Final CTA card -->
-    <div class="cta-gradient rounded-2xl p-8 text-center text-white mt-12 shadow-lg">
-      <h2 class="text-xl md:text-2xl font-bold mb-3 font-heading">
-        Vous avez un projet d'installation ?
-      </h2>
-      <p class="text-green-100 mb-6 text-sm max-w-md mx-auto">
-        Estimez gratuitement votre budget auprès de 3 installateurs certifiés RGE Qualibois près de chez vous.
-      </p>
-      <a href="/devis" class="inline-block bg-white text-accent-600 font-bold px-8 py-3.5 rounded-xl hover:bg-green-50 transition-all shadow-md">
-        🔥 Demander mes devis gratuits
-      </a>
+    <div class="cta-gradient rounded-2xl p-8 md:p-12 text-center text-white mt-16 shadow-xl relative overflow-hidden">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(255,255,255,0.15),transparent)] pointer-events-none"></div>
+      <div class="relative z-10">
+        <h2 class="text-2xl md:text-3xl font-extrabold mb-4 font-heading tracking-tight">
+          Vous avez un projet d'installation concret ?
+        </h2>
+        <p class="text-green-50 mb-8 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+          Estimez précisément votre budget et découvrez le montant exact de vos aides en comparant gratuitement jusqu'à 3 installateurs qualifiés RGE Qualibois de votre département.
+        </p>
+        <a href="/devis" class="inline-flex items-center justify-center bg-white text-accent-700 font-extrabold px-8 py-4 rounded-xl hover:bg-green-50 hover:scale-105 transition-all shadow-md text-base">
+          🔥 Obtenir 3 Devis RGE Gratuits
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // Progressive Enhancement Client Script for instant search and filters
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('faq-search') as HTMLInputElement | null;
+    const clearButton = document.getElementById('search-clear') as HTMLButtonElement | null;
+    const searchStatus = document.getElementById('search-status') as HTMLParagraphElement | null;
+    const emptyState = document.getElementById('faq-empty-state') as HTMLDivElement | null;
+    const highlightSpan = document.getElementById('search-query-highlight') as HTMLSpanElement | null;
+    const resetBtn = document.getElementById('faq-reset-btn') as HTMLButtonElement | null;
+    const cards = document.querySelectorAll('.faq-card') as NodeListOf<HTMLDetailsElement>;
+    const groupSections = document.querySelectorAll('.faq-group-section') as NodeListOf<HTMLDivElement>;
+    const filterButtons = document.querySelectorAll('[data-filter]') as NodeListOf<HTMLButtonElement>;
+
+    let currentCategory = 'all';
+    let searchQuery = '';
+
+    // Cache the original HTML content to prevent losing formatting and structure during regex replacement
+    const originalTextCache = new Map<string, { q: string; a: string }>();
+    cards.forEach(card => {
+      const qText = card.querySelector('.faq-question-text');
+      const aText = card.querySelector('.faq-answer-text');
+      if (qText && aText) {
+        originalTextCache.set(card.id, {
+          q: qText.innerHTML,
+          a: aText.innerHTML
+        });
+      }
+    });
+
+    // Strip HTML to get plain text for matching
+    const stripHtml = (html: string) => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      return doc.body.textContent || "";
+    };
+
+    // Helper to highlight terms
+    const highlight = (text: string, term: string) => {
+      if (!term) return text;
+      // Skip highlighting inside HTML tags to avoid breaking tags like <strong> or <ul>
+      const escapedTerm = term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      // Create a regex to match outside of tags
+      const regex = new RegExp(`(${escapedTerm})`, 'gi');
+      return text.replace(regex, '<mark class="bg-amber-200 text-brand-950 px-0.5 rounded font-semibold">$1</mark>');
+    };
+
+    const updateFaq = () => {
+      let visibleCount = 0;
+      const normalizedQuery = searchQuery.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+      // Handle Clear Button display
+      if (clearButton) {
+        if (searchQuery.length > 0) {
+          clearButton.classList.remove('hidden');
+        } else {
+          clearButton.classList.add('hidden');
+        }
+      }
+
+      cards.forEach(card => {
+        const cache = originalTextCache.get(card.id);
+        const qTextEl = card.querySelector('.faq-question-text');
+        const aTextEl = card.querySelector('.faq-answer-text');
+
+        if (!cache || !qTextEl || !aTextEl) return;
+
+        const categoryMatches = (currentCategory === 'all' || card.dataset.itemCat === currentCategory);
+        
+        const plainQ = stripHtml(cache.q).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const plainA = stripHtml(cache.a).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        
+        const searchMatches = !normalizedQuery || 
+                              plainQ.includes(normalizedQuery) || 
+                              plainA.includes(normalizedQuery);
+
+        if (categoryMatches && searchMatches) {
+          card.classList.remove('hidden');
+          visibleCount++;
+
+          if (normalizedQuery) {
+            card.open = true; // Auto-open matching items during search
+            // Highlight matching terms, but carefully to avoid breaking raw structure
+            qTextEl.innerHTML = highlight(cache.q, searchQuery);
+            aTextEl.innerHTML = highlight(cache.a, searchQuery);
+          } else {
+            card.open = false; // Close when search is empty
+            qTextEl.innerHTML = cache.q;
+            aTextEl.innerHTML = cache.a;
+          }
+        } else {
+          card.classList.add('hidden');
+          card.open = false;
+          // Restore original state
+          qTextEl.innerHTML = cache.q;
+          aTextEl.innerHTML = cache.a;
+        }
+      });
+
+      // Show/Hide category headers based on whether any cards inside them are visible
+      groupSections.forEach(section => {
+        const cat = section.dataset.catSection;
+        // Count visible cards under this section
+        const sectionVisibleCards = section.querySelectorAll('.faq-card:not(.hidden)').length;
+        
+        if (sectionVisibleCards > 0 && (currentCategory === 'all' || cat === currentCategory)) {
+          section.classList.remove('hidden');
+        } else {
+          section.classList.add('hidden');
+        }
+      });
+
+      // Handle empty state
+      if (emptyState) {
+        if (visibleCount === 0) {
+          emptyState.classList.remove('hidden');
+          if (highlightSpan) highlightSpan.textContent = searchQuery;
+        } else {
+          emptyState.classList.add('hidden');
+        }
+      }
+
+      // Update Search status count message
+      if (searchStatus) {
+        if (searchQuery.trim().length > 0) {
+          searchStatus.textContent = `${visibleCount} question${visibleCount > 1 ? 's' : ''} trouvée${visibleCount > 1 ? 's' : ''} pour votre recherche`;
+          searchStatus.classList.remove('opacity-0');
+        } else {
+          searchStatus.classList.add('opacity-0');
+          searchStatus.textContent = '';
+        }
+      }
+    };
+
+    // Category button click handlers
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentCategory = btn.dataset.filter || 'all';
+
+        // Update active styling
+        filterButtons.forEach(b => {
+          if (b.dataset.filter === currentCategory) {
+            b.setAttribute('aria-selected', 'true');
+            b.className = 'flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-bold rounded-full border transition-all duration-200 shadow-sm cursor-pointer select-none bg-green-700 text-white border-green-700 ring-2 ring-green-700/20';
+          } else {
+            b.setAttribute('aria-selected', 'false');
+            b.className = 'flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-bold rounded-full border transition-all duration-200 shadow-sm cursor-pointer select-none bg-white text-brand-850 border-amber-200 hover:bg-amber-50 hover:border-amber-300';
+          }
+        });
+
+        updateFaq();
+      });
+    });
+
+    // Live Search events
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = (e.target as HTMLInputElement).value;
+        updateFaq();
+      });
+    }
+
+    if (clearButton && searchInput) {
+      clearButton.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        updateFaq();
+        searchInput.focus();
+      });
+    }
+
+    // Reset button on empty state
+    if (resetBtn && searchInput) {
+      resetBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        // Reset category filter too
+        const allBtn = document.querySelector('[data-filter="all"]') as HTMLButtonElement | null;
+        if (allBtn) allBtn.click();
+        updateFaq();
+      });
+    }
+  });
+</script>
