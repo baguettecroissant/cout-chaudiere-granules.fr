@@ -79,57 +79,124 @@ const canonicalUrl = canonical
           <a href="/glossaire" class="hover:text-white transition-colors">Glossaire</a>
           <a href="/simulateur-prix" class="hover:text-white transition-colors">Simulateur</a>
         </nav>
-        <a href="/devis" class="cta-gradient text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-all shadow-md hover:shadow-lg">
-          🔥 Devis Gratuit →
-        </a>
+        <div class="flex items-center gap-3">
+          <a href="/devis" class="cta-gradient text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-all shadow-md hover:shadow-lg">
+            🔥 Devis Gratuit →
+          </a>
+          <!-- Mobile hamburger -->
+          <button id="mobile-menu-btn" class="md:hidden flex flex-col gap-1.5 p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Menu de navigation">
+            <span class="block w-5 h-0.5 bg-white rounded-full transition-transform" id="bar1"></span>
+            <span class="block w-5 h-0.5 bg-white rounded-full transition-opacity" id="bar2"></span>
+            <span class="block w-5 h-0.5 bg-white rounded-full transition-transform" id="bar3"></span>
+          </button>
+        </div>
       </div>
     </div>
-  </header>
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu" class="fixed inset-0 z-50 hidden" aria-hidden="true">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="mobile-menu-backdrop"></div>
+    <nav class="absolute top-0 right-0 w-72 h-full bg-brand-800 shadow-2xl flex flex-col overflow-y-auto transform translate-x-full transition-transform duration-300" id="mobile-menu-panel">
+      <div class="flex items-center justify-between p-5 border-b border-brand-700">
+        <span class="text-white font-bold font-heading text-lg">Menu</span>
+        <button id="mobile-menu-close" class="text-white p-2 hover:bg-white/10 rounded-lg transition-colors" aria-label="Fermer le menu">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="flex-1 p-5 space-y-1">
+        <a href="/" class="flex items-center gap-3 px-4 py-3 rounded-xl text-amber-100 hover:bg-white/10 transition-colors font-medium text-sm">🏠 Accueil</a>
+        <a href="/guides" class="flex items-center gap-3 px-4 py-3 rounded-xl text-amber-100 hover:bg-white/10 transition-colors font-medium text-sm">📚 Guides</a>
+        <a href="/marques" class="flex items-center gap-3 px-4 py-3 rounded-xl text-amber-100 hover:bg-white/10 transition-colors font-medium text-sm">🏆 Marques</a>
+        <a href="/annuaire" class="flex items-center gap-3 px-4 py-3 rounded-xl text-amber-100 hover:bg-white/10 transition-colors font-medium text-sm">📍 Annuaire</a>
+        <a href="/simulateur-prix" class="flex items-center gap-3 px-4 py-3 rounded-xl text-amber-100 hover:bg-white/10 transition-colors font-medium text-sm">🧮 Simulateur Prix</a>
+        <a href="/faq" class="flex items-center gap-3 px-4 py-3 rounded-xl text-amber-100 hover:bg-white/10 transition-colors font-medium text-sm">❓ FAQ</a>
+        <a href="/glossaire" class="flex items-center gap-3 px-4 py-3 rounded-xl text-amber-100 hover:bg-white/10 transition-colors font-medium text-sm">📖 Glossaire</a>
+      </div>
+      <div class="p-5 border-t border-brand-700">
+        <a href="/devis" class="block w-full cta-gradient text-white text-center py-3.5 rounded-xl font-bold text-base shadow-lg transition-all">
+          🔥 Demander un Devis Gratuit
+        </a>
+      </div>
+    </nav>
+  </div>
 
   <!-- Main content -->
   <main class="flex-1">
     <slot />
   </main>
 
-  <!-- Footer -->
+  <!-- Mega Footer -->
   <footer class="footer-bg py-12 mt-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid md:grid-cols-4 gap-8 mb-8">
-        <div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-8">
+        <!-- Col 1: À propos -->
+        <div class="col-span-2 md:col-span-1">
           <div class="flex items-center gap-2 mb-4">
             <svg class="w-6 h-6 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2c0 5-4.5 7.5-4.5 12.5C7.5 17.5 9.5 20 12 22c2.5-2 4.5-4.5 4.5-7.5C16.5 9.5 12 7 12 2z"/>
             </svg>
             <span class="text-white font-bold font-heading">{siteConfig.name}</span>
           </div>
-          <p class="text-sm leading-relaxed text-amber-200/70">{siteConfig.tagline}</p>
+          <p class="text-sm leading-relaxed text-amber-200/70 mb-4">{siteConfig.tagline}</p>
+          <a href="/devis" class="inline-block cta-gradient text-white text-xs font-bold px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-all">
+            🔥 Devis Gratuit →
+          </a>
         </div>
+
+        <!-- Col 2: Guides -->
         <div>
-          <h4 class="text-white font-semibold mb-4 font-heading">Guides populaires</h4>
+          <h4 class="text-white font-semibold mb-4 font-heading">📚 Guides</h4>
           <ul class="space-y-2 text-sm text-amber-200/70">
             <li><a href="/guides/prix-chaudiere-granules-2026" class="hover:text-white transition-colors">Prix Chaudière Granulés</a></li>
             <li><a href="/guides/aides-chaudiere-granules-2026" class="hover:text-white transition-colors">Aides MaPrimeRénov'</a></li>
             <li><a href="/guides/comparatif-marques-chaudiere-granules" class="hover:text-white transition-colors">Comparatif Marques</a></li>
             <li><a href="/guides/remplacement-chaudiere-fioul-granules" class="hover:text-white transition-colors">Remplacement Fioul</a></li>
+            <li><a href="/guides/chaudiere-granules-vs-pompe-chaleur" class="hover:text-white transition-colors">Granulés vs PAC</a></li>
+            <li><a href="/guides/entretien-chaudiere-granules" class="hover:text-white transition-colors">Entretien & Ramonage</a></li>
+            <li class="pt-1"><a href="/guides" class="text-amber-300 hover:text-white transition-colors font-semibold">Tous les guides →</a></li>
           </ul>
         </div>
+
+        <!-- Col 3: Marques -->
         <div>
-          <h4 class="text-white font-semibold mb-4 font-heading">Villes populaires</h4>
+          <h4 class="text-white font-semibold mb-4 font-heading">🏆 Marques</h4>
+          <ul class="space-y-2 text-sm text-amber-200/70">
+            <li><a href="/marques/okofen" class="hover:text-white transition-colors">Ökofen</a></li>
+            <li><a href="/marques/froling" class="hover:text-white transition-colors">Fröling</a></li>
+            <li><a href="/marques/hargassner" class="hover:text-white transition-colors">Hargassner</a></li>
+            <li><a href="/marques/de-dietrich" class="hover:text-white transition-colors">De Dietrich</a></li>
+            <li><a href="/marques/viessmann" class="hover:text-white transition-colors">Viessmann</a></li>
+            <li><a href="/marques/hs-france" class="hover:text-white transition-colors">HS France</a></li>
+            <li class="pt-1"><a href="/marques" class="text-amber-300 hover:text-white transition-colors font-semibold">Comparatif complet →</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Villes populaires -->
+        <div>
+          <h4 class="text-white font-semibold mb-4 font-heading">📍 Villes</h4>
           <ul class="space-y-2 text-sm text-amber-200/70">
             <li><a href="/prix-chaudiere-granules/paris" class="hover:text-white transition-colors">Paris</a></li>
             <li><a href="/prix-chaudiere-granules/lyon" class="hover:text-white transition-colors">Lyon</a></li>
             <li><a href="/prix-chaudiere-granules/bordeaux" class="hover:text-white transition-colors">Bordeaux</a></li>
             <li><a href="/prix-chaudiere-granules/toulouse" class="hover:text-white transition-colors">Toulouse</a></li>
             <li><a href="/prix-chaudiere-granules/strasbourg" class="hover:text-white transition-colors">Strasbourg</a></li>
+            <li><a href="/prix-chaudiere-granules/marseille" class="hover:text-white transition-colors">Marseille</a></li>
+            <li><a href="/prix-chaudiere-granules/nantes" class="hover:text-white transition-colors">Nantes</a></li>
+            <li><a href="/prix-chaudiere-granules/lille" class="hover:text-white transition-colors">Lille</a></li>
+            <li class="pt-1"><a href="/annuaire" class="text-amber-300 hover:text-white transition-colors font-semibold">Annuaire complet →</a></li>
           </ul>
         </div>
+
+        <!-- Col 5: Outils & Infos -->
         <div>
-          <h4 class="text-white font-semibold mb-4 font-heading">Informations</h4>
+          <h4 class="text-white font-semibold mb-4 font-heading">🛠️ Outils & Infos</h4>
           <ul class="space-y-2 text-sm text-amber-200/70">
-            <li>Service 100% gratuit</li>
-            <li>Artisans certifiés RGE Qualibois</li>
-            <li>Données indicatives 2026</li>
-            <li class="pt-2"><a href="/mentions-legales" class="hover:text-white transition-colors">Mentions légales</a></li>
+            <li><a href="/simulateur-prix" class="hover:text-white transition-colors">🧮 Simulateur Prix</a></li>
+            <li><a href="/faq" class="hover:text-white transition-colors">❓ FAQ Complète</a></li>
+            <li><a href="/glossaire" class="hover:text-white transition-colors">📖 Glossaire Technique</a></li>
+            <li><a href="/devis" class="hover:text-white transition-colors">📝 Demande de Devis</a></li>
+            <li class="pt-2"><a href="/mentions-legales" class="hover:text-white transition-colors text-amber-200/50">Mentions légales</a></li>
           </ul>
         </div>
       </div>
@@ -159,6 +226,35 @@ const canonicalUrl = canonical
         }
       }, { passive: true });
     }
+
+    // Mobile Menu
+    var menuBtn = document.getElementById('mobile-menu-btn');
+    var menuOverlay = document.getElementById('mobile-menu');
+    var menuPanel = document.getElementById('mobile-menu-panel');
+    var menuClose = document.getElementById('mobile-menu-close');
+    var menuBackdrop = document.getElementById('mobile-menu-backdrop');
+
+    function openMenu() {
+      menuOverlay.classList.remove('hidden');
+      menuOverlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(function() {
+        menuPanel.style.transform = 'translateX(0)';
+      });
+    }
+
+    function closeMenu() {
+      menuPanel.style.transform = 'translateX(100%)';
+      document.body.style.overflow = '';
+      setTimeout(function() {
+        menuOverlay.classList.add('hidden');
+        menuOverlay.setAttribute('aria-hidden', 'true');
+      }, 300);
+    }
+
+    if (menuBtn) menuBtn.addEventListener('click', openMenu);
+    if (menuClose) menuClose.addEventListener('click', closeMenu);
+    if (menuBackdrop) menuBackdrop.addEventListener('click', closeMenu);
 
     // Sticky CTA
     var cta = document.getElementById('sticky-cta');
@@ -204,3 +300,4 @@ const canonicalUrl = canonical
   </script>
 </body>
 </html>
+

@@ -158,5 +158,75 @@ const jsonLd = [
         <p class="text-xs text-brand-700 leading-relaxed">{brand.sav}</p>
       </div>
     </section>
+
+    <!-- Other brands -->
+    <section>
+      <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading">🏆 Comparer avec d'autres marques</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+        {brands.filter(b => b.slug !== brand.slug).map((b) => (
+          <a href={`/marques/${b.slug}`} class="bg-white border border-amber-200 rounded-xl px-4 py-4 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover">
+            <span class="text-xl block mb-1">{b.flag}</span>
+            <span class="font-semibold text-brand-800 group-hover:text-accent-500 text-sm block">{b.name}</span>
+            <span class="text-xs text-brand-600 mt-0.5 block">{b.priceRange}</span>
+          </a>
+        ))}
+      </div>
+      <div class="text-center mt-4">
+        <a href="/marques" class="text-accent-500 hover:text-accent-600 font-semibold text-sm transition-colors">Comparatif complet des marques →</a>
+      </div>
+    </section>
+
+    <!-- Related guides -->
+    <section class="bg-white rounded-2xl shadow-sm border border-amber-200 p-6 md:p-8">
+      <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading">📚 Guides liés</h2>
+      <div class="grid sm:grid-cols-3 gap-4">
+        <a href="/guides/prix-chaudiere-granules-2026" class="bg-brand-50 rounded-xl p-4 border border-amber-100 hover:border-accent-400 hover:shadow-md transition-all group">
+          <span class="text-lg block mb-1">💰</span>
+          <span class="font-bold text-brand-800 group-hover:text-accent-500 text-sm block">Prix Chaudière Granulés 2026</span>
+          <span class="text-xs text-brand-600 mt-1 block">Budget complet fourniture + pose</span>
+        </a>
+        <a href="/guides/comparatif-marques-chaudiere-granules" class="bg-brand-50 rounded-xl p-4 border border-amber-100 hover:border-accent-400 hover:shadow-md transition-all group">
+          <span class="text-lg block mb-1">⭐</span>
+          <span class="font-bold text-brand-800 group-hover:text-accent-500 text-sm block">Comparatif Marques 2026</span>
+          <span class="text-xs text-brand-600 mt-1 block">Ökofen vs Fröling vs Hargassner</span>
+        </a>
+        <a href="/guides/aides-chaudiere-granules-2026" class="bg-brand-50 rounded-xl p-4 border border-amber-100 hover:border-accent-400 hover:shadow-md transition-all group">
+          <span class="text-lg block mb-1">🏛️</span>
+          <span class="font-bold text-brand-800 group-hover:text-accent-500 text-sm block">Aides MaPrimeRénov' 2026</span>
+          <span class="text-xs text-brand-600 mt-1 block">Cumul des aides et reste à charge</span>
+        </a>
+      </div>
+      <div class="text-center mt-4">
+        <a href="/guides" class="text-accent-500 hover:text-accent-600 font-semibold text-sm transition-colors">Tous les guides →</a>
+      </div>
+    </section>
+
+    <!-- Popular cities -->
+    <section>
+      <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading">📍 Prix par ville</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-3">
+        <a href="/prix-chaudiere-granules/paris" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Paris</span></a>
+        <a href="/prix-chaudiere-granules/lyon" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Lyon</span></a>
+        <a href="/prix-chaudiere-granules/bordeaux" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Bordeaux</span></a>
+        <a href="/prix-chaudiere-granules/toulouse" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Toulouse</span></a>
+        <a href="/prix-chaudiere-granules/strasbourg" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Strasbourg</span></a>
+        <a href="/prix-chaudiere-granules/marseille" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Marseille</span></a>
+        <a href="/prix-chaudiere-granules/nantes" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Nantes</span></a>
+        <a href="/prix-chaudiere-granules/lille" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Lille</span></a>
+      </div>
+      <div class="text-center mt-4">
+        <a href="/annuaire" class="text-accent-500 hover:text-accent-600 font-semibold text-sm transition-colors">Annuaire complet →</a>
+      </div>
+    </section>
+
+    <!-- Simulator CTA -->
+    <section>
+      <a href="/simulateur-prix" class="block bg-brand-700 text-white rounded-2xl border border-brand-800 p-6 md:p-8 hover:bg-brand-600 transition-all group shadow-md text-center">
+        <span class="text-3xl block mb-2">🧮</span>
+        <h3 class="font-bold text-xl font-heading text-amber-300 group-hover:text-amber-200">Simulez votre projet {brand.name}</h3>
+        <p class="text-sm text-amber-200/80 mt-2 max-w-lg mx-auto">Estimez la puissance nécessaire, le coût total et le montant de vos aides pour une chaudière {brand.name}.</p>
+        <span class="inline-block mt-4 bg-white text-accent-600 font-bold px-6 py-3 rounded-xl shadow text-sm">⚡ Lancer le simulateur gratuit →</span>
+      </a>
+    </section>
   </div>
 </BaseLayout>

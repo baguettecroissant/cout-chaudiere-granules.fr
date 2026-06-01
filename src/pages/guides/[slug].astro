@@ -93,52 +93,89 @@ const jsonLd = [
       </article>
 
       <!-- Sidebar -->
-      <aside class="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
-        <!-- ViteUnDevis Widget in Sidebar -->
-        <QuoteWidget keyword={"Installation " + guide.title} />
-
-        <!-- Interactive simulator CTA -->
-        <div class="bg-brand-700 text-white rounded-2xl border border-brand-800 p-6 space-y-4 shadow-md">
-          <span class="text-3xl">🧮</span>
-          <h3 class="font-bold text-lg font-heading text-amber-300">Simulez votre reste à charge en 2 minutes</h3>
-          <p class="text-xs text-amber-200/80 leading-relaxed">
-            Notre calculateur interactif évalue gratuitement la puissance nécessaire pour votre logement et simule le montant exact de vos aides financières nationales 2026.
-          </p>
-          <a href="/simulateur-prix" class="block w-full text-center bg-white text-accent-600 font-bold py-3 rounded-xl hover:bg-green-50 transition-colors shadow text-xs">
-            ⚡ Lancer le simulateur gratuit →
+      <aside class="lg:col-span-4 space-y-6">
+        <!-- Devis CTA -->
+        <div class="cta-gradient rounded-2xl p-6 text-white text-center shadow-lg lg:sticky lg:top-24">
+          <h3 class="text-base font-bold mb-3 font-heading">Recevez 3 Devis Gratuits</h3>
+          <p class="text-xs text-green-100 mb-4">Artisans certifiés RGE Qualibois. Réponse en 48h.</p>
+          <a href="/devis" class="inline-block bg-white text-accent-700 font-bold px-6 py-3 rounded-xl hover:bg-green-50 transition-colors text-sm shadow-md">
+            🔥 Demander mes devis →
           </a>
+        </div>
+
+        <!-- Quick links: Marques -->
+        <div class="bg-white rounded-2xl border border-amber-200 p-5 shadow-sm">
+          <h3 class="text-sm font-bold text-brand-800 mb-3 font-heading">🏆 Marques à découvrir</h3>
+          <ul class="space-y-2">
+            <li><a href="/marques/okofen" class="text-xs text-brand-700 hover:text-accent-500 transition-colors">🇦🇹 Ökofen — Premium</a></li>
+            <li><a href="/marques/froling" class="text-xs text-brand-700 hover:text-accent-500 transition-colors">🇦🇹 Fröling — Pro</a></li>
+            <li><a href="/marques/hargassner" class="text-xs text-brand-700 hover:text-accent-500 transition-colors">🇦🇹 Hargassner — Robuste</a></li>
+            <li><a href="/marques/de-dietrich" class="text-xs text-brand-700 hover:text-accent-500 transition-colors">🇫🇷 De Dietrich — SAV France</a></li>
+            <li><a href="/marques/viessmann" class="text-xs text-brand-700 hover:text-accent-500 transition-colors">🇩🇪 Viessmann — Connecté</a></li>
+            <li><a href="/marques/hs-france" class="text-xs text-brand-700 hover:text-accent-500 transition-colors">🇫🇷 HS France — Budget</a></li>
+          </ul>
+          <a href="/marques" class="block text-center text-accent-500 hover:text-accent-600 font-semibold text-xs mt-3 transition-colors">Comparatif complet →</a>
+        </div>
+
+        <!-- Quick links: Simulateur -->
+        <a href="/simulateur-prix" class="block bg-brand-700 text-white rounded-2xl border border-brand-800 p-5 hover:bg-brand-600 transition-all group shadow-md">
+          <span class="text-xl block mb-1">🧮</span>
+          <h3 class="font-bold text-sm text-amber-300 group-hover:text-amber-200">Simulateur de prix</h3>
+          <p class="text-xs text-amber-200/80 mt-1">Estimez votre reste à charge en 2 min.</p>
+        </a>
+
+        <!-- Related guides -->
+        <div class="bg-white rounded-2xl border border-amber-200 p-5 shadow-sm">
+          <h3 class="text-sm font-bold text-brand-800 mb-3 font-heading">📚 Guides liés</h3>
+          <div class="space-y-3">
+            {relatedGuides.map((g) => (
+              <a href={`/guides/${g.slug}`} class="flex gap-3 group hover:bg-brand-50 rounded-lg p-2 -mx-2 transition-colors">
+                <span class="text-base">{g.emoji}</span>
+                <div>
+                  <span class="block text-xs font-bold text-brand-800 group-hover:text-accent-500 leading-snug">{g.title}</span>
+                  <span class="block text-xs text-brand-600 mt-0.5">{g.readTime}</span>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
       </aside>
     </div>
 
-    <!-- Related Articles -->
-    <section class="mt-16 border-t border-amber-200 pt-12">
-      <h2 class="text-2xl font-bold text-brand-800 mb-8 font-heading text-center">
-        📖 Articles et Guides recommandés
-      </h2>
-      <div class="grid md:grid-cols-3 gap-6">
-        {relatedGuides.map((rg) => (
-          <div class="bg-white rounded-2xl border border-amber-200 shadow-sm overflow-hidden flex flex-col justify-between card-hover">
-            <div>
-              <img src={rg.image} alt={rg.title} class="w-full h-40 object-cover border-b border-amber-100" />
-              <div class="p-5 space-y-2">
-                <span class="text-[10px] font-semibold text-brand-600 uppercase tracking-wider bg-brand-50 px-2 py-0.5 rounded">
-                  {rg.category}
-                </span>
-                <h3 class="font-bold text-brand-800 font-heading leading-tight text-sm line-clamp-2">
-                  {rg.title}
-                </h3>
-              </div>
-            </div>
-            <div class="p-5 border-t border-amber-100 flex items-center justify-between">
-              <span class="text-[10px] text-brand-600 font-medium">⏱️ {rg.readTime}</span>
-              <a href={`/guides/${rg.slug}`} class="cta-gradient text-white text-[10px] font-bold px-3 py-1.5 rounded-lg transition-all shadow-sm">
-                Lire →
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
+    <!-- Bottom cross-links (full width) -->
+    <div class="mt-12 space-y-6">
+      <!-- Popular cities -->
+      <section>
+        <h2 class="text-xl font-bold text-brand-800 mb-4 font-heading">📍 Prix chaudière granulés par ville</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-3">
+          <a href="/prix-chaudiere-granules/paris" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Paris</span></a>
+          <a href="/prix-chaudiere-granules/lyon" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Lyon</span></a>
+          <a href="/prix-chaudiere-granules/bordeaux" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Bordeaux</span></a>
+          <a href="/prix-chaudiere-granules/toulouse" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Toulouse</span></a>
+          <a href="/prix-chaudiere-granules/strasbourg" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Strasbourg</span></a>
+          <a href="/prix-chaudiere-granules/marseille" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Marseille</span></a>
+          <a href="/prix-chaudiere-granules/nantes" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Nantes</span></a>
+          <a href="/prix-chaudiere-granules/lille" class="bg-white border border-amber-200 rounded-xl px-3 py-2.5 hover:border-accent-400 hover:shadow-md transition-all group text-center card-hover"><span class="font-semibold text-brand-800 group-hover:text-accent-500 text-xs">Lille</span></a>
+        </div>
+        <div class="text-center mt-4">
+          <a href="/annuaire" class="text-accent-500 hover:text-accent-600 font-semibold text-sm transition-colors">Annuaire complet →</a>
+        </div>
+      </section>
+
+      <!-- FAQ + Glossaire -->
+      <section class="grid sm:grid-cols-2 gap-4">
+        <a href="/faq" class="bg-white rounded-2xl border border-amber-200 p-6 hover:border-accent-400 hover:shadow-md transition-all group">
+          <span class="text-2xl block mb-2">❓</span>
+          <h3 class="font-bold text-lg font-heading text-brand-800 group-hover:text-accent-500">FAQ Complète</h3>
+          <p class="text-xs text-brand-600 mt-2">Réponses d'experts sur le prix, les aides et l'installation.</p>
+        </a>
+        <a href="/glossaire" class="bg-white rounded-2xl border border-amber-200 p-6 hover:border-accent-400 hover:shadow-md transition-all group">
+          <span class="text-2xl block mb-2">📖</span>
+          <h3 class="font-bold text-lg font-heading text-brand-800 group-hover:text-accent-500">Glossaire Technique</h3>
+          <p class="text-xs text-brand-600 mt-2">Tous les termes techniques expliqués simplement.</p>
+        </a>
+      </section>
+    </div>
   </div>
 </BaseLayout>
+
