@@ -224,7 +224,7 @@ export const guides: Guide[] = [
     readTime: "12 min",
     category: "Aides",
     emoji: "🌿",
-    image: "/images/blog/installation-chaudiere.png",
+    image: "/images/blog/aides-renovation.png",
     content: `
 <p>L'installation d'une <strong>chaudière à granulés de bois</strong> est activement encouragée par les pouvoirs publics dans le cadre de la transition vers des énergies décarbonées. En 2026, l'État a reconduit et ajusté son arsenal d'aides financières pour inciter les ménages à remplacer leurs chaudières au fioul et au gaz de ville. Grâce au cumul des dispositifs **MaPrimeRénov'**, des **Primes Énergie (CEE)**, de la **TVA à taux réduit** et de l'**Éco-PTZ**, le coût des travaux peut être réduit de manière spectaculaire, rendant ce système accessible à toutes les bourses.</p>
 
@@ -342,7 +342,7 @@ export const guides: Guide[] = [
     readTime: "11 min",
     category: "Comparatif",
     emoji: "⚖️",
-    image: "/images/blog/fioul-vs-granules.png",
+    image: "/images/blog/comparatif-pac-chaudiere.png",
     content: `
 <p>Lorsqu'il s'agit de remplacer une ancienne chaudière fioul ou gaz gourmande, deux technologies écologiques de pointe s'affrontent sur le marché de la rénovation résidentielle : la <strong>chaudière à granulés de bois</strong> (pellets) et la <strong>pompe à chaleur (PAC) air/eau</strong>. Ces deux systèmes affichent des bilans carbone remarquables et bénéficient d'aides financières importantes. Pourtant, ils reposent sur des principes physiques et économiques diamétralement opposés.</p>
 
@@ -455,7 +455,7 @@ export const guides: Guide[] = [
     readTime: "13 min",
     category: "Rénovation",
     emoji: "🔥",
-    image: "/images/blog/installation-chaudiere.png",
+    image: "/images/blog/fioul-vs-granules.png",
     content: `
 <p>En France, plus de 2,5 millions de maisons individuelles sont encore chauffées au fioul domestique. Pourtant, cette énergie fossile est l'une des plus polluantes et des plus coûteuses du marché. De plus, la loi interdit désormais l'installation de chaudières fioul neuves. Le passage à la <strong>chaudière à granulés de bois</strong> (pellets) est la transition la plus naturelle et la plus performante pour les propriétaires de chauffage central : elle réutilise le réseau de radiateurs à eau existant tout en divisant les factures de combustible par deux.</p>
 
@@ -701,7 +701,7 @@ export const guides: Guide[] = [
     readTime: "9 min",
     category: "Entretien",
     emoji: "🔧",
-    image: "/images/blog/installation-chaudiere.png",
+    image: "/images/blog/entretien-chaudiere.png",
     content: `
 <p>Comme tout système de chauffage central à combustion, la <strong>chaudière à granulés de bois</strong> exige un entretien régulier. Ce n'est pas seulement une recommandation technique pour garantir son excellent rendement thermique et prolonger sa durée de vie ; c'est également une **obligation réglementaire stricte** imposée par la loi française. Un entretien de qualité permet d'éviter l'encrassement des échangeurs, de limiter les pannes en plein hiver et d'assurer une combustion propre et sécurisée (absence de monoxyde de carbone).</p>
 
@@ -869,7 +869,7 @@ export const guides: Guide[] = [
     readTime: "9 min",
     category: "Technologie",
     emoji: "🔥",
-    image: "/images/blog/installation-chaudiere.png",
+    image: "/images/blog/chaudiere-condensation.png",
     content: `
 <p>Sur le marché du chauffage biomasse en 2026, la <strong>chaudière à granulés de bois à condensation</strong> représente le fleuron absolu de l'efficacité énergétique. Alors qu'une chaudière automatique standard affiche déjà d'excellents rendements situés entre 88 % et 92 %, les modèles dotés de la technologie de condensation repoussent les limites physiques pour atteindre **des rendements thermiques allant de 102 % à 107 %** sur PCI (Pouvoir Calorifique Inférieur).</p>
 
@@ -939,7 +939,7 @@ export const guides: Guide[] = [
     readTime: "11 min",
     category: "Achat",
     emoji: "⚠️",
-    image: "/images/blog/installation-chaudiere.png",
+    image: "/images/blog/devis-pieges.png",
     content: `
 <p>L'installation d'une <strong>chaudière à granulés de bois</strong> est un projet d'envergure qui représente un investissement financier important. Porté par le dynamisme des aides de l'État (MaPrimeRénov' et CEE), ce secteur a vu fleurir de nombreux installateurs sur tout le territoire national. Si la grande majorité de ces artisans sont des professionnels RGE Qualibois hautement compétents et intègres, certains acteurs profitent du manque de connaissances techniques des clients pour proposer des devis surévalués, incomplets ou inadaptés.</p>
 
